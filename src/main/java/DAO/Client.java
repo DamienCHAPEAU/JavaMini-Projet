@@ -21,10 +21,28 @@ public class Client {
     private String Pays;
     private String Telephone;
     private String Fax;
+
     
-    public Client(String code, String societe) {
+    
+    public Client(String CODE, String societe, String contact, String fonction, String Adresse, String Ville, String Region, String CodePostal, String Pays, String Telephone, String Fax) {
+        this.CODE = CODE;
+        this.societe = societe;
+        this.contact = contact;
+        this.fonction = fonction;
+        this.Adresse = Adresse;
+        this.Ville = Ville;
+        this.Region = Region;
+        this.CodePostal = CodePostal;
+        this.Pays = Pays;
+        this.Telephone = Telephone;
+        this.Fax = Fax;
+    }
+
+
+    public Client(String code, String societe, String Contact) {
 		this.CODE = code;
 		this.societe = societe;
+                this.contact= Contact;
 	}
 
     public String getCODE() {
