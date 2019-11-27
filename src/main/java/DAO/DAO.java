@@ -19,7 +19,7 @@ import javax.sql.DataSource;
  */
 public class DAO {
 
-    private final DataSource myDataSource;
+    public final DataSource myDataSource;
     
     
     	public DAO(DataSource dataSource) {
