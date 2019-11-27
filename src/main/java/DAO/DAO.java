@@ -49,6 +49,26 @@ public class DAO {
 		}
 		return result;
 	}
+        
+        public List<Categorie> categorieCode() throws SQLException {
+
+		List<Categorie> result = new LinkedList<>();
+
+		String sql = "SELECT * FROM CATEGORIE ORDER BY CODE";
+		try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				int code = rs.getInt("CODE");
+				String libelle = rs.getString("LIBELLE");
+                                String description = rs.getString("DESCRIPTION");				
+				Categorie c = new Categorie(code, libelle, description);
+                                result.add(c);
+                               
+			}
+		}
+		return result;
+	}
     
     
 }
