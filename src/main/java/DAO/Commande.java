@@ -23,10 +23,30 @@ public class Commande {
     private String code_postal_livraison;
     private String pays_livraison;
     private float remise;
+
+    public Commande(int numero, String client, String saisie, String envoie, float port, String destinataire, String adresse_livraison, String ville_livraison, String region_livraison, String code_postal_livraison, String pays_livraison, float remise) {
+        this.numero = numero;
+        this.client = client;
+        this.saisie = saisie;
+        this.envoie = envoie;
+        this.port = port;
+        this.destinataire = destinataire;
+        this.adresse_livraison = adresse_livraison;
+        this.ville_livraison = ville_livraison;
+        this.region_livraison = region_livraison;
+        this.code_postal_livraison = code_postal_livraison;
+        this.pays_livraison = pays_livraison;
+        this.remise = remise;
+    }
+    
+    
+    
     
     public Commande(int numero){
         this.numero = numero;
     }
+    
+    
 
     public int getNumero() {
         return numero;
