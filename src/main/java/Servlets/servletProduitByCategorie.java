@@ -8,6 +8,7 @@ package Servlets;
 import DAO.Categorie;
 import DAO.DAO;
 import DAO.DataSourceFactory;
+import DAO.Produit;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -24,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author pedago
  */
 @WebServlet(name = "Categorie", urlPatterns = {"/Categorie"})
-public class servletCategorie extends HttpServlet {
+public class servletProduitByCategorie extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,8 +42,8 @@ public class servletCategorie extends HttpServlet {
 		try {
 			// Créér le ExtendedDAO avec sa source de données
 			DAO dao = new DAO(DataSourceFactory.getDataSource());
-                        List<Categorie> code = dao.categorieCode();                        
-                        request.setAttribute("code", code); 
+                        List<Produit> code = dao.produitByCategorieCode(0);                        
+                        request.setAttribute("code", code);
 			// On continue vers la page JSP sélectionnée
 			
 		
@@ -50,7 +51,7 @@ public class servletCategorie extends HttpServlet {
 			Logger.getLogger("servlet").log(Level.SEVERE, "Erreur de traitement", ex);
                         request.setAttribute("message", ex.getMessage());
 		}
-                request.getRequestDispatcher("vueCategorie.jsp").forward(request, response);
+                request.getRequestDispatcher("viewProduitByCategorie.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -68,7 +69,7 @@ public class servletCategorie extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(servletCategorie.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(servletListCategorie.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -86,7 +87,7 @@ public class servletCategorie extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(servletCategorie.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(servletListCategorie.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

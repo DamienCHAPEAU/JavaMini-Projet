@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.sql.DataSource;
 
 /**
@@ -50,7 +52,7 @@ public class DAO {
 		return result;
 	}
         
-        public List<Categorie> categorieCode() throws SQLException {
+        public List<Categorie> listCategorieCode() throws SQLException {
 
 		List<Categorie> result = new LinkedList<>();
 
@@ -64,6 +66,51 @@ public class DAO {
                                 String description = rs.getString("DESCRIPTION");				
 				Categorie c = new Categorie(code, libelle, description);
                                 result.add(c);
+                               
+			}
+		}
+		return result;
+	}
+        
+        public List<Produit> produitByCategorieCode(int codeC) throws SQLException, DAOException {
+
+		List<Produit> result = new LinkedList<>();
+
+		String sql = "SELECT * FROM PRODUIT WHERE CATEGORIE=?";
+		try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                        stmt.setInt(1, codeC);			
+                        try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) { // On a trouvé
+					String nom = rs.getString("NOM");
+                                        int categorie = rs.getInt("Categorie");
+                                        float prix_unitaire = rs.getFloat("Prix_unitaire");
+                                        Produit p = new Produit(nom, categorie, prix_unitaire);
+                                        result.add(p);
+				} 
+			} catch (SQLException ex) {
+			Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+			throw new DAOException(ex.getMessage());
+                        }                       
+			
+		}
+		return result;
+	}
+        
+        public List<Produit> produitCode() throws SQLException {
+
+		List<Produit> result = new LinkedList<>();
+
+		String sql = "SELECT * FROM Produit ORDER BY REFERENCE";
+		try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {				
+				String nom = rs.getString("NOM");
+                                int categorie = rs.getInt("Categorie");
+                                float prix_unitaire = rs.getFloat("Prix_unitaire");
+				Produit p = new Produit(nom, categorie, prix_unitaire);
+                                result.add(p);
                                
 			}
 		}
