@@ -117,5 +117,47 @@ public class DAO {
 		return result;
 	}
     
-    
+        public List<Commande> commandesOfClient(String CLIENT) throws DAOException, SQLException {
+        List<Commande> result = new LinkedList<>();
+        String sql = "SELECT * FROM COMMANDE WHERE CLIENT = ?";
+
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql);) {
+            stmt.setString(1, CLIENT);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Commande c = new Commande(rs.getInt("NUMERO"), rs.getString("CLIENT"), rs.getString("SAISIE_LE"), rs.getString("ENVOYEE_LE"), rs.getFloat("PORT"), rs.getString("DESTINATAIRE"), rs.getString("ADRESSE_LIVRAISON"), rs.getString("VILLE_LIVRAISON"), rs.getString("REGION_LIVRAISON"), rs.getString("CODE_POSTAL_LIVRAIS"), rs.getString("PAYS_LIVRAISON"), rs.getFloat("REMISE"));
+                    result.add(c);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new DAOException("erreur" + e.getMessage());
+        }
+        return result;
+    }
+        
+        
+        public List<Commande> commandes() throws DAOException, SQLException {
+        List<Commande> result = new LinkedList<>();
+        String sql = "SELECT * FROM COMMANDE ";
+
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql);) {
+            
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Commande c = new Commande(rs.getInt("NUMERO"), rs.getString("CLIENT"), rs.getString("SAISIE_LE"), rs.getString("ENVOYEE_LE"), rs.getFloat("PORT"), rs.getString("DESTINATAIRE"), rs.getString("ADRESSE_LIVRAISON"), rs.getString("VILLE_LIVRAISON"), rs.getString("REGION_LIVRAISON"), rs.getString("CODE_POSTAL_LIVRAIS"), rs.getString("PAYS_LIVRAISON"), rs.getFloat("REMISE"));
+                    
+                    result.add(c);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new DAOException("erreur" + e.getMessage());
+        }
+        return result;
+    }
 }

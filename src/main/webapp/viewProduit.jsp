@@ -22,11 +22,11 @@
         <table>
             <thead><td>Nom</td><td>Categorie</td><td>Prix</td><td>Lien</td></thead>
             <tbody>                
-                <c:forEach var="code" items="${code}">                    
+                <c:forEach var="code" items="${CODE}">                    
                     <tr>
-                        <td>${code.nom}</td>
-                        <td>${code.categorie}</td>
-                        <td>${code.prix_unitaire}</td>                        
+                        <td>${code.NUMERO}</td>
+                        <td>${code.CLIENT}</td>
+                        <td>${code.SAISIE_LE}</td>                        
                         <%--<td><a title=${code.nom} href="vue"+${code.code}/></a>${code.libelle}</td>--%>                  
                     </tr>	  	
                 </c:forEach>             

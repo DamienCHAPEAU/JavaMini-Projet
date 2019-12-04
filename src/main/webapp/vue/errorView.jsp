@@ -1,7 +1,7 @@
 <%-- 
-    Document   : viewAllClient
-    Created on : 26 nov. 2019, 16:53:40
-    Author     : pedago
+    Document   : errorView
+    Created on : 3 déc. 2019, 19:29:38
+    Author     : Clément
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -12,7 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
-       
+        <h1>ERROR</h1>
     </body>
 </html>

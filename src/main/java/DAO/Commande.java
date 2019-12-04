@@ -24,7 +24,8 @@ public class Commande {
     private String pays_livraison;
     private float remise;
 
-    public Commande(int numero, String client, String saisie, String envoie, float port, String destinataire, String adresse_livraison, String ville_livraison, String region_livraison, String code_postal_livraison, String pays_livraison, float remise) {
+    public Commande(int numero, String client, String saisie, String envoie, float port, String destinataire, String adresse_livraison, 
+            String ville_livraison, String region_livraison, String code_postal_livraison, String pays_livraison, float remise) {
         this.numero = numero;
         this.client = client;
         this.saisie = saisie;
