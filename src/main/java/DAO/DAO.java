@@ -72,16 +72,16 @@ public class DAO {
 		return result;
 	}
         
-        public List<Produit> produitByCategorieCode(int codeC) throws SQLException, DAOException {
+        public List<Produit> produitByCategorieCode(int CATEGORIE) throws SQLException, DAOException {
 
 		List<Produit> result = new LinkedList<>();
 
 		String sql = "SELECT * FROM PRODUIT WHERE CATEGORIE=?";
 		try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
-                        stmt.setInt(1, codeC);			
+                        stmt.setInt(1, CATEGORIE);			
                         try (ResultSet rs = stmt.executeQuery()) {
-				if (rs.next()) { // On a trouvé
+				while (rs.next()) { // On a trouvé
 					String nom = rs.getString("NOM");
                                         int categorie = rs.getInt("Categorie");
                                         float prix_unitaire = rs.getFloat("Prix_unitaire");

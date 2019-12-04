@@ -19,15 +19,14 @@
     <body>
         <div><h4>${message}</h4></div>
         <h1>Liste des produits</h1>
-        <table>
-            <thead><td>Nom</td><td>Categorie</td><td>Prix</td><td>Lien</td></thead>
+        <table border="1">
+            <thead><td>Nom</td><td>Categorie</td><td>Prix</td></thead>
             <tbody>                
-                <c:forEach var="code" items="${CODE}">                    
+                <c:forEach var="code" items="${code}">                    
                     <tr>
-                        <td>${code.NUMERO}</td>
-                        <td>${code.CLIENT}</td>
-                        <td>${code.SAISIE_LE}</td>                        
-                        <%--<td><a title=${code.nom} href="vue"+${code.code}/></a>${code.libelle}</td>--%>                  
+                        <td>${code.nom}</td>
+                        <td>${code.categorie}</td>
+                        <td>${code.prix_unitaire}</td>
                     </tr>	  	
                 </c:forEach>             
             </tbody>

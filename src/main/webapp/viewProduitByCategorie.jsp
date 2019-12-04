@@ -13,7 +13,7 @@
     <body>
         <div><h4>${message}</h4></div>
         <h1>Liste des produits par catégories</h1>
-        <table>
+        <table border="1">
             <thead><td>Nom</td><td>Categorie</td><td>Prix</td></thead>
             <tbody>                
                 <c:forEach var="code" items="${code}">                    
