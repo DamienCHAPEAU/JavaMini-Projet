@@ -13,18 +13,30 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Commande du client : ${client}</h1>
     </body>
-    
-     <table>
-            <thead><td>Code</td><td>Libelle</td><td>Description</td></thead>
-            <tbody>      
+
+    <table border = 1>
+        <thead><td>numero de commande</td><td>client</td><td>saisie le :</td><td>envoyée le :</td><td>frais de port</td><td>destinataire</td><td>adresse de livraison</td><td>ville de livraison</td><td>region de livraison</td><td>code postal</td><td>pays</td><td>remise</td></thead>
+    <tbody>      
         <c:forEach var="code" items="${code}">                    
-                    <tr>
-                        <td>${code.code}</td>
-                        <td><a href="viewCategorie=${code.code}"/>${code.libelle}</a></td>
-                        <td>${code.description}</td>                 
-                    </tr>	    	
-                </c:forEach>    
-                    </tbody>
+            <tr>
+                <td>${code.numero}</td>
+                <td>${code.client}</td>   
+                <td>${code.saisie}</td>
+                <td>${code.envoie}</td>
+                <td>${code.port}</td>
+                <td>${code.destinataire}</td>
+                <td>${code.adresse_livraison}</td>
+                <td>${code.ville_livraison}</td>
+                <td>${code.region_livraison}</td>
+                <td>${code.code_postal_livraison}</td>
+                <td>${code.pays_livraison}</td>
+                <td>${code.remise}</td>
+
+
+
+            </tr>	    	
+        </c:forEach>    
+    </tbody>
 </html>

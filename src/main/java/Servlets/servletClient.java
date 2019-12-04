@@ -5,14 +5,12 @@
  */
 package Servlets;
 
-import DAO.Categorie;
+import DAO.Client;
 import DAO.Commande;
 import DAO.DAO;
-import DAO.DAOException;
 import DAO.DataSourceFactory;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,17 +20,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
-
-@WebServlet(name = "Commandes", urlPatterns = "/Commandes")
-
 /**
  *
  * @author pedago
  */
-public class servletCommandes extends HttpServlet{
- 
+
+@WebServlet(name = "Client", urlPatterns = "/Client")
+public class servletClient extends HttpServlet{
+    
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
@@ -44,16 +39,16 @@ public class servletCommandes extends HttpServlet{
             
             DAO dao = new DAO(DataSourceFactory.getDataSource());
             //List<Commande> code = dao.commandes();
-            List<Commande> code = dao.commandesOfClient(val);
+            List<Client> code = dao.infoClient(val);
 
 
             // On renseigne un attribut utilisé par la vue
             request.setAttribute("code", code);
             request.setAttribute("client", val);
             // On redirige vers la vue
-            request.getRequestDispatcher("viewCommandes.jsp").forward(request, response);
+            request.getRequestDispatcher("viewClient.jsp").forward(request, response);
 
-        } catch (IOException | SQLException | ServletException e) {
+        } catch (IOException | ServletException e) {
             Logger.getLogger("servlet").log(Level.SEVERE, "Erreur de traitement", e);
             // On renseigne un attribut utilisé par la vue
 
