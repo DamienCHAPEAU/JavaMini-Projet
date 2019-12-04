@@ -5,7 +5,7 @@
  */
 package Servlets;
 
-import DAO.Categorie;
+
 import DAO.DAO;
 import DAO.DataSourceFactory;
 import DAO.Produit;

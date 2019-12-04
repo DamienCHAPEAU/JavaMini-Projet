@@ -19,13 +19,13 @@
     <body>
         <div><h4>${message}</h4></div>
         <h1>Liste des catégories</h1>
-        <table>
+        <table border="1">
             <thead><td>Code</td><td>Libelle</td><td>Description</td></thead>
             <tbody>                
                 <c:forEach var="code" items="${code}">                    
                     <tr>
                         <td>${code.code}</td>
-                        <td><a href="viewCategorie=${code.code}"/>${code.libelle}</a></td>
+                        <td><a href="ProduitsByCategorie?categorie=${code.code}"/>${code.libelle}</a></td>
                         <td>${code.description}</td>                 
                     </tr>	  	
                 </c:forEach>             

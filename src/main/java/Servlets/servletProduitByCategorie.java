@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author pedago
  */
-@WebServlet(name = "Categorie", urlPatterns = {"/Categorie"})
+@WebServlet(name = "ProduitsByCategorie", urlPatterns = {"/ProduitsByCategorie"})
 public class servletProduitByCategorie extends HttpServlet {
 
     /**
@@ -40,11 +40,11 @@ public class servletProduitByCategorie extends HttpServlet {
 		throws ServletException, IOException, SQLException {
 
 		try {
-			// Créér le ExtendedDAO avec sa source de données
+                        String val = request.getParameter("categorie");
+                        int valInt = Integer.parseInt(val);			
 			DAO dao = new DAO(DataSourceFactory.getDataSource());
-                        List<Produit> code = dao.produitByCategorieCode(0);                        
-                        request.setAttribute("code", code);
-			// On continue vers la page JSP sélectionnée
+                        List<Produit> code = dao.produitByCategorieCode(valInt);                        
+                        request.setAttribute("code", code);		
 			
 		
                 } catch (Exception ex) {
