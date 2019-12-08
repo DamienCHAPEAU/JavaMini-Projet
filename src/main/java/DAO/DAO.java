@@ -84,7 +84,7 @@ public class DAO {
                     String nom = rs.getString("NOM");
                     int categorie = rs.getInt("Categorie");
                     float prix_unitaire = rs.getFloat("Prix_unitaire");
-                    Produit p = new Produit(nom, categorie, prix_unitaire);
+                    Produit p = new Produit(rs.getInt("REFERENCE"),nom, categorie, prix_unitaire);
                     result.add(p);
                 }
             } catch (SQLException ex) {
@@ -108,14 +108,39 @@ public class DAO {
                 String nom = rs.getString("NOM");
                 int categorie = rs.getInt("Categorie");
                 float prix_unitaire = rs.getFloat("Prix_unitaire");
-                Produit p = new Produit(nom, categorie, prix_unitaire);
+                Produit p = new Produit(rs.getInt("REFERENCE"),nom, categorie, prix_unitaire);
                 result.add(p);
 
             }
         }
         return result;
     }
+    
+        public List<Produit> produitCode(String ref) throws SQLException {
 
+        List<Produit> result = new LinkedList<>();
+
+        String sql = "SELECT * FROM Produit WHERE REFERENCE = ?";
+        
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            
+            stmt.setString(1, ref);
+            
+           ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String nom = rs.getString("NOM");
+                int categorie = rs.getInt("Categorie");
+                float prix_unitaire = rs.getFloat("Prix_unitaire");
+                Produit p = new Produit(rs.getInt("REFERENCE"),nom, categorie, prix_unitaire);
+                result.add(p);
+            
+            }
+        }
+        return result;
+    }
+    
+    
     public List<Commande> commandesOfClient(String CLIENT) throws DAOException, SQLException {
         List<Commande> result = new LinkedList<>();
         String sql = "SELECT * FROM COMMANDE WHERE CLIENT = ?";
@@ -136,7 +161,28 @@ public class DAO {
         }
         return result;
     }
+    
+        public List<Ligne> ligneOfCommandes (int commande) throws DAOException, SQLException {
+        List<Ligne> result = new LinkedList<>();
+        String sql = "SELECT * FROM LIGNE WHERE COMMANDE = ?";
 
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql);) {
+            stmt.setInt(1, commande);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Ligne l = new Ligne(rs.getInt("COMMANDE"), rs.getInt("PRODUIT"), rs.getInt("QUANTITE"));
+                    result.add(l);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new DAOException("erreur" + e.getMessage());
+        }
+        return result;
+    }
+    
     /**
      * public List<Commande> commandes() throws DAOException, SQLException {
      * List<Commande> result = new LinkedList<>(); String sql = "SELECT * FROM

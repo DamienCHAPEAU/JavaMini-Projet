@@ -6,7 +6,6 @@
 package Servlets;
 
 import DAO.Client;
-import DAO.Commande;
 import DAO.DAO;
 import DAO.DataSourceFactory;
 import java.io.IOException;
@@ -73,9 +72,9 @@ public class servletClient extends HttpServlet{
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(servletListCategorie.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(servletClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(servletCommandes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(servletClient.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

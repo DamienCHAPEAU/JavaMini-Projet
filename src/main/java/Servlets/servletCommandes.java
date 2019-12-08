@@ -8,11 +8,9 @@ package Servlets;
 import DAO.Categorie;
 import DAO.Commande;
 import DAO.DAO;
-import DAO.DAOException;
 import DAO.DataSourceFactory;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -78,7 +76,7 @@ public class servletCommandes extends HttpServlet{
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(servletListCategorie.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(servletCommandes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(servletCommandes.class.getName()).log(Level.SEVERE, null, ex);
         }

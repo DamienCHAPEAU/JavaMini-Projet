@@ -34,7 +34,8 @@ public class Produit {
         this.indisponible = indisponible;
     }
     
-    public Produit(String nom, int categorie, float prix_unitaire) {
+    public Produit(int ref, String nom, int categorie, float prix_unitaire) {
+        this.reference = ref;
         this.nom = nom;
         this.categorie = categorie;        
         this.prix_unitaire = prix_unitaire;

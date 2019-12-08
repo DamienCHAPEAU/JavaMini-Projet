@@ -21,7 +21,7 @@
     <tbody>      
         <c:forEach var="code" items="${code}">                    
             <tr>
-                <td>${code.numero}</td>
+                <td><a href="ligneCommandes?commande=${code.numero}"/>${code.numero}</a></td>
                 <td>${code.client}</td>   
                 <td>${code.saisie}</td>
                 <td>${code.envoie}</td>

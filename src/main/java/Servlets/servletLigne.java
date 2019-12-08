@@ -5,16 +5,18 @@
  */
 package Servlets;
 
-
+import DAO.Commande;
 import DAO.DAO;
 import DAO.DataSourceFactory;
-import DAO.Produit;
+import DAO.Ligne;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,48 +24,42 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author pedago
+ * @author Clément
  */
-@WebServlet(name = "Produit", urlPatterns = {"/Produit"})
-public class servletProduit extends HttpServlet {
+@WebServlet(name = "ligneCommandes", urlPatterns = "/ligneCommandes")
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+public class servletLigne extends HttpServlet{
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException, SQLException {
+            throws ServletException, IOException, Exception {
 
-		try {
-                        String ref = request.getParameter("ref");
-			// Créér le ExtendedDAO avec sa source de données
-			DAO dao = new DAO(DataSourceFactory.getDataSource());
-                        
-                        if(ref == null){
-                            List<Produit> code = dao.produitCode();
-                            request.setAttribute("code", code);
-                        }else{
-                            List<Produit> code = dao.produitCode(ref);
-                            request.setAttribute("code", code);
-                        }
-                       // request.setAttribute("code", code);
-                        request.setAttribute("ref", ref); 
-			// On continue vers la page JSP sélectionnée
-			
-		
-                } catch (Exception ex) {
-			Logger.getLogger("servlet").log(Level.SEVERE, "Erreur de traitement", ex);
-                        request.setAttribute("message", ex.getMessage());
-		}
-                request.getRequestDispatcher("viewProduit.jsp").forward(request, response);
+
+            try {	
+                String val = request.getParameter("commande");
+            
+            
+            DAO dao = new DAO(DataSourceFactory.getDataSource());
+            //List<Commande> code = dao.commandes();
+            List<Ligne> code = dao.ligneOfCommandes(Integer.valueOf(val));
+
+
+            // On renseigne un attribut utilisé par la vue
+            request.setAttribute("code", code);
+            request.setAttribute("commande", val);
+            // On redirige vers la vue
+            request.getRequestDispatcher("ligneCommandes.jsp").forward(request, response);
+
+        } catch (IOException | ServletException e) {
+            Logger.getLogger("servlet").log(Level.SEVERE, "Erreur de traitement", e);
+            // On renseigne un attribut utilisé par la vue
+
+            // On redirige vers la page d'erreur
+            request.getRequestDispatcher("vue/errorView.jsp").forward(request, response);
+        }
+
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -78,7 +74,9 @@ public class servletProduit extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(servletListCategorie.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(servletLigne.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(servletLigne.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -96,7 +94,9 @@ public class servletProduit extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(servletListCategorie.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(servletLigne.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(servletLigne.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -110,5 +110,7 @@ public class servletProduit extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
- }
+    
+}
+
 
