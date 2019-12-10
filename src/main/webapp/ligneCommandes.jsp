@@ -16,17 +16,24 @@
     <body>
         <h1>Details de la commandes: ${commande}</h1>
         <table border = 1>
-            <thead><td>Produit</td><td>quantité</td></thead>
+            <thead><td>nom produit</td><td>reference</td><td>categorie</td><td>prix unitaire</td><td>quantité</td></thead>
 
 
         <tbody>      
-            <c:forEach var="code" items="${code}">                    
+
+                
+            <c:forEach var="prod" items="${prod}" >                    
                 <tr>
 
-                    <td><a href="Produit?ref=${code.numProduit}"/>${code.numProduit}</a></td>   
-                    <td>${code.quantity}</td>
+                    
+                    <td>${prod.nom}</td>
+                    <td>${prod.reference}</td>
+                    <td>${prod.categorie}</td>
+                    <td>${prod.prix_unitaire}</td>
+                    <td>${prod.quantity}</td>
+                    
                 </tr>	    	
-            </c:forEach>    
+            </c:forEach>        
         </tbody>
 </body>
 </html>

@@ -9,8 +9,10 @@ import DAO.Commande;
 import DAO.DAO;
 import DAO.DataSourceFactory;
 import DAO.Ligne;
+import DAO.Produit;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,10 +43,21 @@ public class servletLigne extends HttpServlet{
             DAO dao = new DAO(DataSourceFactory.getDataSource());
             //List<Commande> code = dao.commandes();
             List<Ligne> code = dao.ligneOfCommandes(Integer.valueOf(val));
+            
+            
+            
+             List<Produit> prod = new LinkedList<>();
+            
+             for(int i = 0; i< code.size(); i++){
+                 Produit p = dao.produitCode(String.valueOf(code.get(i).getNumProduit())).get(0);
+                 
+                prod.add(new Produit(p.getReference(), p.getNom(), p.getCategorie(), p.getPrix_unitaire(), code.get(i).getQuantity())            );
+            }
 
 
             // On renseigne un attribut utilisé par la vue
-            request.setAttribute("code", code);
+            //request.setAttribute("code", code);
+            request.setAttribute("prod", prod);
             request.setAttribute("commande", val);
             // On redirige vers la vue
             request.getRequestDispatcher("ligneCommandes.jsp").forward(request, response);
