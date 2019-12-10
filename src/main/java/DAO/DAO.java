@@ -234,21 +234,21 @@ public class DAO {
     //Requete visualiser les chiffres d'affaire par pays, en choisissant la période (date de début / date de fin) sur laquelle doit porter la statistique.
         //Exemple :
         //SELECT SUM(PORT) AS CA FROM COMMANDE WHERE PAYS_LIVRAISON='France' AND SAISIE_LE>='1994-08-08' AND ENVOYEE_LE<='1994-08-15';
-        
-        public ChiffreAffaire caByPays(String pays, String dateSaisie, String dateEnvoyee) throws SQLException, DAOException {
-
-		ChiffreAffaire result = new ChiffreAffaire(0);
-
-		String sql = "SELECT SUM(PORT) FROM COMMANDE WHERE PAYS_LIVRAISON=(?) AND SAISIE_LE>=(?) AND ENVOYEE_LE<=(?)";
+          
+        public List<ChiffreAffaire> caByClient(String dateSaisie, String dateEnvoyee) throws SQLException, DAOException {
+                List<ChiffreAffaire> result = new LinkedList<>();
+                
+		String sql = "SELECT SUM(PORT) AS CA,CLIENT FROM COMMANDE WHERE SAISIE_LE>=? AND ENVOYEE_LE<=? GROUP BY CLIENT";
 		try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
-                        stmt.setString(1, pays);
-                        stmt.setString(2, dateSaisie);
-                        stmt.setString(3, dateEnvoyee);
+                        stmt.setString(1, dateSaisie);
+                        stmt.setString(2, dateEnvoyee);
                         try (ResultSet rs = stmt.executeQuery()) {
-				if (rs.next()) { // On a trouvé					                                      
-                                        ChiffreAffaire ca = new ChiffreAffaire(rs.getFloat("CA"));
-                                        result = ca;
+				while (rs.next()) { // On a trouvé
+                                    float CA = rs.getFloat("CA");
+                                    String client = rs.getString("CLIENT");
+                                    ChiffreAffaire ca = new ChiffreAffaire(CA,client);                                    
+                                    result.add(ca);
 				} 
 			} catch (SQLException ex) {
 			Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
@@ -259,45 +259,20 @@ public class DAO {
 		return result;
 	}
         
-        
-        /*public ChiffreAffaire caByCategorie(int categorie, String dateSaisie, String dateEnvoyee) throws SQLException, DAOException {
-
-		ChiffreAffaire result = new ChiffreAffaire(0);
-
-		String sql = "A FAIRE";
+        public List<ChiffreAffaire> caByPays(String dateSaisie, String dateEnvoyee) throws SQLException, DAOException {
+                List<ChiffreAffaire> result = new LinkedList<>();
+                
+		String sql = "SELECT SUM(PORT) AS CA,PAYS_LIVRAISON FROM COMMANDE WHERE SAISIE_LE>=? AND ENVOYEE_LE<=? GROUP BY PAYS_LIVRAISON";
 		try (Connection connection = myDataSource.getConnection(); 
 		     PreparedStatement stmt = connection.prepareStatement(sql)) {
-                        stmt.setInt(1, categorie);
-                        stmt.setString(2, dateSaisie);
-                        stmt.setString(3, dateEnvoyee);
+                        stmt.setString(1, dateSaisie);
+                        stmt.setString(2, dateEnvoyee);
                         try (ResultSet rs = stmt.executeQuery()) {
-				if (rs.next()) { // On a trouvé					                                      
-                                        ChiffreAffaire ca = new ChiffreAffaire(rs.getFloat("CA"));
-                                        result = ca;
-				} 
-			} catch (SQLException ex) {
-			Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
-			throw new DAOException(ex.getMessage());
-                        }                       
-			
-		}
-		return result;
-	}*/
-        
-        public ChiffreAffaire caByClient(String client, String dateSaisie, String dateEnvoyee) throws SQLException, DAOException {
-
-		ChiffreAffaire result = new ChiffreAffaire(0);
-
-		String sql = "SELECT SUM(PORT) FROM COMMANDE WHERE CLIENT=(?) AND SAISIE_LE>=(?) AND ENVOYEE_LE<=(?)";
-		try (Connection connection = myDataSource.getConnection(); 
-		     PreparedStatement stmt = connection.prepareStatement(sql)) {
-                        stmt.setString(1, client);
-                        stmt.setString(2, dateSaisie);
-                        stmt.setString(3, dateEnvoyee);
-                        try (ResultSet rs = stmt.executeQuery()) {
-				if (rs.next()) { // On a trouvé					                                      
-                                        ChiffreAffaire ca = new ChiffreAffaire(rs.getFloat("CA"));
-                                        result = ca;
+				while (rs.next()) { // On a trouvé
+                                    float CA = rs.getFloat("CA");
+                                    String pays = rs.getString("PAYS_LIVRAISON");
+                                    ChiffreAffaire ca = new ChiffreAffaire(CA,pays);                                    
+                                    result.add(ca);
 				} 
 			} catch (SQLException ex) {
 			Logger.getLogger("DAO").log(Level.SEVERE, null, ex);

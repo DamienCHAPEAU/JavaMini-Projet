@@ -12,9 +12,16 @@ package DAO;
 public class ChiffreAffaire {
     
     private float CA;
+    private String client;
 
-    public ChiffreAffaire(float CA) {
+    public ChiffreAffaire(float CA, String client) {
         this.CA = CA;
+        this.client = client;
+    }
+
+
+    public String getClient() {
+        return client;
     }
 
     public float getCA() {
