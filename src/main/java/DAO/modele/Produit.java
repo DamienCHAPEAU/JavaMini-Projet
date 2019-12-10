@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DAO;
+package DAO.modele;
 
 /**
  *
@@ -21,6 +21,9 @@ public class Produit {
     private int unites_commandees;
     private int niveau_de_reappro;
     private int indisponible;
+    private int quantity;
+    
+    
 
     public Produit(int reference, String nom, int categorie, String quantite_par_unite, float prix_unitaire, int unites_en_stock, int unites_commandees, int niveau_de_reappro, int indisponible) {
         this.reference = reference;
@@ -41,7 +44,19 @@ public class Produit {
         this.prix_unitaire = prix_unitaire;
        
     }
+        public Produit(int ref, String nom, int categorie, float prix_unitaire, int quantity) {
+        this.reference = ref;
+        this.nom = nom;
+        this.categorie = categorie;        
+        this.prix_unitaire = prix_unitaire;
+        this.quantity = quantity;
+       
+    }
 
+    public int getQuantity() {
+        return quantity;
+    }
+    
     public int getReference() {
         return reference;
     }
