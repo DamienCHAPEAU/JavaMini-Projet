@@ -25,7 +25,7 @@
             <tbody>                
                 <c:forEach var="code" items="${code}">                    
                     <tr>
-                        <td>${code.pays}</td>  
+                        <td>${code.client}</td>  
                         <td>${code.CA}</td>                                              
                     </tr>	  	
                 </c:forEach>             

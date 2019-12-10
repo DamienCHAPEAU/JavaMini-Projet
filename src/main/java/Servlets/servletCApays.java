@@ -8,9 +8,9 @@ package Servlets;
 import DAO.ChiffreAffaire;
 import DAO.DAO;
 import DAO.DataSourceFactory;
-import DAO.Produit;
+
 import java.io.IOException;
-import java.io.PrintWriter;
+
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -54,7 +54,7 @@ public class servletCApays extends HttpServlet {
 			Logger.getLogger("servlet").log(Level.SEVERE, "Erreur de traitement", ex);
                         request.setAttribute("message", ex.getMessage());
 		}
-                request.getRequestDispatcher("viewCApays.jsp").forward(request, response);
+                request.getRequestDispatcher("viewCapays.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
