@@ -5,6 +5,11 @@
  */
 package DAO;
 
+import DAO.modele.Client;
+import DAO.modele.Categorie;
+import DAO.modele.Commande;
+import DAO.modele.Produit;
+import DAO.modele.Ligne;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

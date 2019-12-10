@@ -5,7 +5,7 @@
  */
 package Servlets;
 
-import DAO.Categorie;
+import DAO.modele.Categorie;
 import DAO.DAO;
 import DAO.DataSourceFactory;
 import java.io.IOException;

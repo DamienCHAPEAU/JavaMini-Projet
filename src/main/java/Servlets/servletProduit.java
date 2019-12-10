@@ -8,7 +8,7 @@ package Servlets;
 
 import DAO.DAO;
 import DAO.DataSourceFactory;
-import DAO.Produit;
+import DAO.modele.Produit;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;

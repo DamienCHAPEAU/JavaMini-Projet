@@ -5,11 +5,11 @@
  */
 package Servlets;
 
-import DAO.Commande;
+import DAO.modele.Commande;
 import DAO.DAO;
 import DAO.DataSourceFactory;
-import DAO.Ligne;
-import DAO.Produit;
+import DAO.modele.Ligne;
+import DAO.modele.Produit;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.LinkedList;
