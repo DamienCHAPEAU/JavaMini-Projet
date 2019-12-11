@@ -7,6 +7,7 @@ package DAO;
 
 import DAO.modele.Client;
 import DAO.modele.Categorie;
+import DAO.modele.ChiffreAffaire;
 import DAO.modele.Commande;
 import DAO.modele.Produit;
 import DAO.modele.Ligne;
@@ -287,6 +288,30 @@ public class DAO {
 		}
 		return result;
 	}
-        
 
+        
+        public List<ChiffreAffaire> caByCategorie(String dateSaisie, String dateEnvoyee) throws SQLException, DAOException {
+                List<ChiffreAffaire> result = new LinkedList<>();
+                
+		String sql = "SELECT SUM(PORT) AS CA, CAT.LIBELLE FROM COMMANDE C, PRODUIT P, LIGNE L, CATEGORIE CAT WHERE C.SAISIE_LE>=? AND C.ENVOYEE_LE<=? AND C.NUMERO=L.COMMANDE AND L.PRODUIT=P.REFERENCE AND P.CATEGORIE=CAT.CODE GROUP BY CAT.LIBELLE";
+		try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                        stmt.setString(1, dateSaisie);
+                        stmt.setString(2, dateEnvoyee);
+                        try (ResultSet rs = stmt.executeQuery()) {
+				while (rs.next()) { // On a trouvé
+                                    float CA = rs.getFloat("CA");
+                                    String libelle = rs.getString("LIBELLE");
+                                    ChiffreAffaire ca = new ChiffreAffaire(CA,libelle);                                    
+                                    result.add(ca);
+				} 
+			} catch (SQLException ex) {
+			Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+			throw new DAOException(ex.getMessage());
+                        }                       
+			
+		}
+		return result;
+	}
+        
 }

@@ -5,7 +5,7 @@
  */
 package Servlets;
 
-import DAO.ChiffreAffaire;
+import DAO.modele.ChiffreAffaire;
 import DAO.DAO;
 import DAO.DataSourceFactory;
 

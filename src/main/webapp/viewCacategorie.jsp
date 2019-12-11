@@ -6,13 +6,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Chiffres d'affaire pays</title>
+        <title>Chiffres d'affaire categorie</title>
         
         
     </head>
     <body>
         
-        <h1>Chiffres d'affaire pays</h1>
+        <h1>Chiffres d'affaire categorie</h1>
         
         <form method='GET'>            
             Saisie le : <input name="Saisie_le" type="date" max="1999-12-31" min="1994-01-01"><br/>
@@ -21,7 +21,7 @@
         </form>
         <div><h4>${message}</h4></div>
         <table border="1">
-            <thead><td>Pays</td><td>CA</td></thead>
+            <thead><td>Categorie</td><td>CA</td></thead>
             <tbody>                
                 <c:forEach var="code" items="${code}">                    
                     <tr>
