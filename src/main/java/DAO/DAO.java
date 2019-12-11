@@ -58,6 +58,27 @@ public class DAO {
         return result;
     }
 
+    public Client LOGIN(String Contact, String Code) throws SQLException {
+
+        
+        String sql = "SELECT CODE, CONTACT FROM CLIENT where CODE = ? and CONTACT = ?";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            stmt.setString(1, Code);
+            stmt.setString(1, Contact);
+            
+                String code = rs.getString("CODE");
+                String contact = rs.getString("CONTACT");
+                Client c = new Client(contact, code);
+                
+                return c;
+
+            
+        }
+        
+    }
+
     public List<Categorie> listCategorieCode() throws SQLException {
 
         List<Categorie> result = new LinkedList<>();
@@ -90,7 +111,7 @@ public class DAO {
                     String nom = rs.getString("NOM");
                     int categorie = rs.getInt("Categorie");
                     float prix_unitaire = rs.getFloat("Prix_unitaire");
-                    Produit p = new Produit(rs.getInt("REFERENCE"),nom, categorie, prix_unitaire);
+                    Produit p = new Produit(rs.getInt("REFERENCE"), nom, categorie, prix_unitaire);
                     result.add(p);
                 }
             } catch (SQLException ex) {
@@ -114,39 +135,38 @@ public class DAO {
                 String nom = rs.getString("NOM");
                 int categorie = rs.getInt("Categorie");
                 float prix_unitaire = rs.getFloat("Prix_unitaire");
-                Produit p = new Produit(rs.getInt("REFERENCE"),nom, categorie, prix_unitaire);
+                Produit p = new Produit(rs.getInt("REFERENCE"), nom, categorie, prix_unitaire);
                 result.add(p);
 
             }
         }
         return result;
     }
-    
-        public List<Produit> produitCode(String ref) throws SQLException {
+
+    public List<Produit> produitCode(String ref) throws SQLException {
 
         List<Produit> result = new LinkedList<>();
 
         String sql = "SELECT * FROM Produit WHERE REFERENCE = ?";
-        
+
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
-            
+
             stmt.setString(1, ref);
-            
-           ResultSet rs = stmt.executeQuery();
+
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 String nom = rs.getString("NOM");
                 int categorie = rs.getInt("Categorie");
                 float prix_unitaire = rs.getFloat("Prix_unitaire");
-                Produit p = new Produit(rs.getInt("REFERENCE"),nom, categorie, prix_unitaire);
+                Produit p = new Produit(rs.getInt("REFERENCE"), nom, categorie, prix_unitaire);
                 result.add(p);
-            
+
             }
         }
         return result;
     }
-    
-    
+
     public List<Commande> commandesOfClient(String CLIENT) throws DAOException, SQLException {
         List<Commande> result = new LinkedList<>();
         String sql = "SELECT * FROM COMMANDE WHERE CLIENT = ?";
@@ -167,8 +187,8 @@ public class DAO {
         }
         return result;
     }
-    
-        public List<Ligne> ligneOfCommandes (int commande) throws DAOException, SQLException {
+
+    public List<Ligne> ligneOfCommandes(int commande) throws DAOException, SQLException {
         List<Ligne> result = new LinkedList<>();
         String sql = "SELECT * FROM LIGNE WHERE COMMANDE = ?";
 
@@ -188,7 +208,7 @@ public class DAO {
         }
         return result;
     }
-    
+
     /**
      * public List<Commande> commandes() throws DAOException, SQLException {
      * List<Commande> result = new LinkedList<>(); String sql = "SELECT * FROM
@@ -236,58 +256,57 @@ public class DAO {
         }
         return result;
     }
-    
+
     //Requete visualiser les chiffres d'affaire par pays, en choisissant la période (date de début / date de fin) sur laquelle doit porter la statistique.
-        //Exemple :
-        //SELECT SUM(PORT) AS CA FROM COMMANDE WHERE PAYS_LIVRAISON='France' AND SAISIE_LE>='1994-08-08' AND ENVOYEE_LE<='1994-08-15';
-          
-        public List<ChiffreAffaire> caByClient(String dateSaisie, String dateEnvoyee) throws SQLException, DAOException {
-                List<ChiffreAffaire> result = new LinkedList<>();
-                
-		String sql = "SELECT SUM(PORT) AS CA,CLIENT FROM COMMANDE WHERE SAISIE_LE>=? AND ENVOYEE_LE<=? GROUP BY CLIENT";
-		try (Connection connection = myDataSource.getConnection(); 
-		     PreparedStatement stmt = connection.prepareStatement(sql)) {
-                        stmt.setString(1, dateSaisie);
-                        stmt.setString(2, dateEnvoyee);
-                        try (ResultSet rs = stmt.executeQuery()) {
-				while (rs.next()) { // On a trouvé
-                                    float CA = rs.getFloat("CA");
-                                    String client = rs.getString("CLIENT");
-                                    ChiffreAffaire ca = new ChiffreAffaire(CA,client);                                    
-                                    result.add(ca);
-				} 
-			} catch (SQLException ex) {
-			Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
-			throw new DAOException(ex.getMessage());
-                        }                       
-			
-		}
-		return result;
-	}
-        
-        public List<ChiffreAffaire> caByPays(String dateSaisie, String dateEnvoyee) throws SQLException, DAOException {
-                List<ChiffreAffaire> result = new LinkedList<>();
-                
-		String sql = "SELECT SUM(PORT) AS CA,PAYS_LIVRAISON FROM COMMANDE WHERE SAISIE_LE>=? AND ENVOYEE_LE<=? GROUP BY PAYS_LIVRAISON";
-		try (Connection connection = myDataSource.getConnection(); 
-		     PreparedStatement stmt = connection.prepareStatement(sql)) {
-                        stmt.setString(1, dateSaisie);
-                        stmt.setString(2, dateEnvoyee);
-                        try (ResultSet rs = stmt.executeQuery()) {
-				while (rs.next()) { // On a trouvé
-                                    float CA = rs.getFloat("CA");
-                                    String pays = rs.getString("PAYS_LIVRAISON");
-                                    ChiffreAffaire ca = new ChiffreAffaire(CA,pays);                                    
-                                    result.add(ca);
-				} 
-			} catch (SQLException ex) {
-			Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
-			throw new DAOException(ex.getMessage());
-                        }                       
-			
-		}
-		return result;
-	}
+    //Exemple :
+    //SELECT SUM(PORT) AS CA FROM COMMANDE WHERE PAYS_LIVRAISON='France' AND SAISIE_LE>='1994-08-08' AND ENVOYEE_LE<='1994-08-15';
+    public List<ChiffreAffaire> caByClient(String dateSaisie, String dateEnvoyee) throws SQLException, DAOException {
+        List<ChiffreAffaire> result = new LinkedList<>();
+
+        String sql = "SELECT SUM(PORT) AS CA,CLIENT FROM COMMANDE WHERE SAISIE_LE>=? AND ENVOYEE_LE<=? GROUP BY CLIENT";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, dateSaisie);
+            stmt.setString(2, dateEnvoyee);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) { // On a trouvé
+                    float CA = rs.getFloat("CA");
+                    String client = rs.getString("CLIENT");
+                    ChiffreAffaire ca = new ChiffreAffaire(CA, client);
+                    result.add(ca);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+                throw new DAOException(ex.getMessage());
+            }
+
+        }
+        return result;
+    }
+
+    public List<ChiffreAffaire> caByPays(String dateSaisie, String dateEnvoyee) throws SQLException, DAOException {
+        List<ChiffreAffaire> result = new LinkedList<>();
+
+        String sql = "SELECT SUM(PORT) AS CA,PAYS_LIVRAISON FROM COMMANDE WHERE SAISIE_LE>=? AND ENVOYEE_LE<=? GROUP BY PAYS_LIVRAISON";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, dateSaisie);
+            stmt.setString(2, dateEnvoyee);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) { // On a trouvé
+                    float CA = rs.getFloat("CA");
+                    String pays = rs.getString("PAYS_LIVRAISON");
+                    ChiffreAffaire ca = new ChiffreAffaire(CA, pays);
+                    result.add(ca);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+                throw new DAOException(ex.getMessage());
+            }
+
+        }
+        return result;
+    }
 
         
         public List<ChiffreAffaire> caByCategorie(String dateSaisie, String dateEnvoyee) throws SQLException, DAOException {
