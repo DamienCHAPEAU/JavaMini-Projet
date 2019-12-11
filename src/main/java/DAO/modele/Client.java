@@ -45,8 +45,16 @@ public class Client {
                 this.contact= Contact;
 	}
 
+    public Client( String contact, String CODE) {
+        this.CODE = CODE;
+        this.contact = contact;
+    }
 
 
+
+    
+    
+    
     public String getCODE() {
         return CODE;
     }
