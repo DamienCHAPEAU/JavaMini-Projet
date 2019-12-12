@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -167,6 +168,70 @@ public class DAO {
         return result;
     }
 
+     public void addProduit(Produit prod) throws SQLException{
+        
+        String sql = "INSERT INTO  PRODUIT(nom,fournisseur,categorie,quantite_par_unite,prix_unitaire,unites_en_stock, unites_commandees,niveau_de_reappro,indisponible)  "
+                + "VALUES(?,?,?,?,?,?,?,?,?)"; 
+        
+        try(
+                Connection connection = this.myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql , Statement.RETURN_GENERATED_KEYS)             
+        ){
+            
+            connection.setAutoCommit(false);
+            try{              
+                
+                stmt.setString(1, prod.getNom());
+                stmt.setString(2, prod.getFournisseur());
+                stmt.setInt(3, prod.getCategorie());
+                stmt.setString(4, prod.getQuantite_par_unite());
+                stmt.setFloat(5, prod.getPrix_unitaire());
+                stmt.setInt(6,prod.getUnites_en_stock() );
+                stmt.setInt(7, prod.getUnites_commandees());
+                stmt.setInt(8, prod.getNiveau_de_reappro());
+                stmt.setInt(9, prod.getIndisponible());                
+               
+                stmt.executeUpdate();                
+                connection.commit();
+                
+            }catch (SQLException ex) {
+                Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+               // throw new DAOException(ex.getMessage());
+               connection.rollback();
+            } finally{
+                connection.setAutoCommit(true); 
+            }
+        }
+    }
+        
+    public void suppProduit(int reference) throws SQLException {        
+        String sql = "UPDATE PRODUIT SET indisponible = 1  WHERE reference = " + reference;
+        try(
+                Connection connection = this.myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql )             
+        ){
+            connection.setAutoCommit(false);
+            stmt.executeUpdate();
+            connection.setAutoCommit(true);
+        }        
+    }
+    
+ 
+    public void modifProduit(int reference, String choixModif, String modifProd) throws SQLException{
+        
+        String sql = "UPDATE PRODUIT SET "+choixModif+" = '"+modifProd+"' WHERE reference = "+reference;
+        
+        try(
+                Connection connection = this.myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)
+                ){ 
+            connection.setAutoCommit(false);
+            stmt.executeUpdate();
+            connection.setAutoCommit(true);      
+                       
+        }
+    }    
+    
     public List<Commande> commandesOfClient(String CLIENT) throws DAOException, SQLException {
         List<Commande> result = new LinkedList<>();
         String sql = "SELECT * FROM COMMANDE WHERE CLIENT = ?";

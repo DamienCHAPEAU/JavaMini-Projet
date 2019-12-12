@@ -14,6 +14,7 @@ public class Produit {
     
     private int reference;
     private String nom;
+    private String fournisseur;
     private int categorie;
     private String quantite_par_unite;
     private float prix_unitaire;
@@ -22,6 +23,20 @@ public class Produit {
     private int niveau_de_reappro;
     private int indisponible;
     private int quantity;
+
+    public Produit(int reference, String nom, String fournisseur, int categorie, String quantite_par_unite, float prix_unitaire, int unites_en_stock, int unites_commandees, int niveau_de_reappro, int indisponible, int quantity) {
+        this.reference = reference;
+        this.nom = nom;
+        this.fournisseur = fournisseur;
+        this.categorie = categorie;
+        this.quantite_par_unite = quantite_par_unite;
+        this.prix_unitaire = prix_unitaire;
+        this.unites_en_stock = unites_en_stock;
+        this.unites_commandees = unites_commandees;
+        this.niveau_de_reappro = niveau_de_reappro;
+        this.indisponible = indisponible;
+        this.quantity = quantity;
+    }
     
     
 
@@ -35,6 +50,10 @@ public class Produit {
         this.unites_commandees = unites_commandees;
         this.niveau_de_reappro = niveau_de_reappro;
         this.indisponible = indisponible;
+    }
+
+    public String getFournisseur() {
+        return fournisseur;
     }
     
     public Produit(int ref, String nom, int categorie, float prix_unitaire) {
