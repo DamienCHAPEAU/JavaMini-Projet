@@ -20,7 +20,8 @@
             <groupId>org.apache.derby</groupId>
             <artifactId>derby</artifactId>
             <version>10.14.1.0</version>
-        </dependency>
+            <type>jar</type>
+        </dependency>        
         <!-- Derby network client JDBC driver -->
         <dependency>
             <groupId>org.apache.derby</groupId>
@@ -33,7 +34,6 @@
             <artifactId>derbytools</artifactId>
             <version>10.14.1.0</version>
         </dependency>
-  
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
@@ -69,7 +69,7 @@
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
-            </plugin>            
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -90,18 +90,19 @@
                                     <version>7.0</version>
                                     <type>jar</type>
                                 </artifactItem>
-                                <!-- for Heroku, see: https://devcenter.heroku.com/articles/java-webapp-runner -->
+                                <!-- for Heroku, https://projetjavaee2019.herokuapp.com/LoginPage  -->
                                 <artifactItem>
                                     <groupId>com.github.jsimone</groupId>
                                     <artifactId>webapp-runner</artifactId>
                                     <version>8.5.23.0</version>
                                     <destFileName>webapp-runner.jar</destFileName>
-                                </artifactItem>	
+                                </artifactItem>		
                             </artifactItems>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
 
