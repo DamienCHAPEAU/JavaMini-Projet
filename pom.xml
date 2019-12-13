@@ -17,34 +17,35 @@
     <dependencies>
         <!-- Derby embedded database and JDBC Driver -->
         <dependency>
+<<<<<<< HEAD
             <groupId>org.apache.derby</groupId>
             <artifactId>derby</artifactId>
             <version>10.14.1.0</version>
             <type>jar</type>
         </dependency>        
+=======
+                <groupId>org.apache.derby</groupId>
+                <artifactId>derby</artifactId>
+                <version>10.14.1.0</version>
+        </dependency>
+>>>>>>> parent of ec08bc3... Test correction deploiement heroku
         <!-- Derby network client JDBC driver -->
         <dependency>
-            <groupId>org.apache.derby</groupId>
-            <artifactId>derbyclient</artifactId>
-            <version>10.14.1.0</version>
+                <groupId>org.apache.derby</groupId>
+                <artifactId>derbyclient</artifactId>
+                <version>10.14.1.0</version>
         </dependency>
         <!-- Derby tols (for initializing database from SQL script) -->
         <dependency>
-            <groupId>org.apache.derby</groupId>
-            <artifactId>derbytools</artifactId>
-            <version>10.14.1.0</version>
+                <groupId>org.apache.derby</groupId>
+                <artifactId>derbytools</artifactId>
+                <version>10.14.1.0</version>
         </dependency>
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
             <scope>provided</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
         </dependency>
     </dependencies>
 
