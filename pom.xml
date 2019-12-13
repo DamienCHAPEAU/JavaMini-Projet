@@ -34,6 +34,12 @@
             <version>10.14.1.0</version>
         </dependency>
         <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
+            <version>10.14.1.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
@@ -114,13 +120,13 @@
                                     <version>7.0</version>
                                     <type>jar</type>
                                 </artifactItem>
-                                <!-- for Heroku, https://projetjavaee2019.herokuapp.com/LoginPage  -->
+                                <!-- for Heroku, see: https://devcenter.heroku.com/articles/java-webapp-runner -->
                                 <artifactItem>
                                     <groupId>com.github.jsimone</groupId>
                                     <artifactId>webapp-runner</artifactId>
                                     <version>8.5.23.0</version>
                                     <destFileName>webapp-runner.jar</destFileName>
-                                </artifactItem>		
+                                </artifactItem>	
                             </artifactItems>
                         </configuration>
                     </execution>
