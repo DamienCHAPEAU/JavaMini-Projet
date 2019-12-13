@@ -17,21 +17,10 @@
     <dependencies>
         <!-- Derby embedded database and JDBC Driver -->
         <dependency>
-<<<<<<< HEAD
-<<<<<<< HEAD
-            <groupId>org.apache.derby</groupId>
-            <artifactId>derby</artifactId>
-            <version>10.14.1.0</version>
-            <type>jar</type>
-        </dependency>        
-=======
-=======
->>>>>>> parent of ec08bc3... Test correction deploiement heroku
                 <groupId>org.apache.derby</groupId>
                 <artifactId>derby</artifactId>
                 <version>10.14.1.0</version>
         </dependency>
->>>>>>> parent of ec08bc3... Test correction deploiement heroku
         <!-- Derby network client JDBC driver -->
         <dependency>
                 <groupId>org.apache.derby</groupId>
@@ -94,6 +83,31 @@
                                     <version>7.0</version>
                                     <type>jar</type>
                                 </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${endorsed.dir}</outputDirectory>
+                            <silent>true</silent>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>javax</groupId>
+                                    <artifactId>javaee-endorsed-api</artifactId>
+                                    <version>7.0</version>
+                                    <type>jar</type>
+                                </artifactItem>
                                 <!-- for Heroku, https://projetjavaee2019.herokuapp.com/LoginPage  -->
                                 <artifactItem>
                                     <groupId>com.github.jsimone</groupId>
@@ -106,7 +120,6 @@
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 
