@@ -18,12 +18,15 @@
         <!-- Derby embedded database and JDBC Driver -->
         <dependency>
 <<<<<<< HEAD
+<<<<<<< HEAD
             <groupId>org.apache.derby</groupId>
             <artifactId>derby</artifactId>
             <version>10.14.1.0</version>
             <type>jar</type>
         </dependency>        
 =======
+=======
+>>>>>>> parent of ec08bc3... Test correction deploiement heroku
                 <groupId>org.apache.derby</groupId>
                 <artifactId>derby</artifactId>
                 <version>10.14.1.0</version>
