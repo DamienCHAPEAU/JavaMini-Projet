@@ -36,34 +36,33 @@ public class connexion extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String LOG = request.getParameter("LOG");
+        String Contact = request.getParameter("LOG");
         String MDP = request.getParameter("MDP");
 
         DAO dao = new DAO(DataSourceFactory.getDataSource());
         
         try {
-            Client c2 = dao.LOGIN(LOG, MDP);
-
-            Client c = new Client(LOG,MDP);
+            Client c2 = dao.LOGIN(Contact, MDP);
+            
+            
+            if(c2 == null){
+                this.getServletContext().getRequestDispatcher("/vue/errorView.jsp").forward(request, response);
+            }
             
            
-            if (c2.equals(c)) {
-                 HttpSession session = request.getSession();
-
-                    session.setAttribute("LOG", LOG);
+            else {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("client", Contact);
                     session.setAttribute("MDP", MDP);
                     Logger.getLogger("IDENTIFIANT OK");
-                    this.getServletContext().getRequestDispatcher("/viewCommandes.jsp").forward(request, response);
                     
-            }else{
-                throw new Exception("client inconnu ou mauvais MDP : "+LOG+" "+MDP);
+                    this.getServletContext().getRequestDispatcher("/member.jsp").forward(request, response);
+                    
             }
 
-        } catch (SQLException ex) {
+        } catch (SQLException | IOException | ServletException ex) {
             Logger.getLogger(connexion.class.getName()).log(Level.SEVERE, null, ex);
         
-        } catch (Exception ex) {
-            Logger.getLogger(connexion.class.getName()).log(Level.SEVERE, null, ex);
         }
 
        

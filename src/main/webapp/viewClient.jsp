@@ -11,12 +11,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Info Client</title>
     </head>
     <body>
         <h1>client : ${client} | Informations personnelles : </h1>
         <table border = 1>
-            <thead><td>client</td><td>SOCIETE</td><td>CONTACT</td><td>Fonction</td><td>ADRESSE</td><td>VILLE</td><td>region</td><td>code postal</td><td>pays</td><td>TELEPHONE</td><td>FAX</td></thead>
+            <thead><td>Client</td><td>Société</td><td>Contact</td><td>Fonction</td><td>Adresse</td><td>Ville</td><td>Région</td><td>Code Postal</td><td>Pays</td><td>Téléphone</td><td>FAX</td></thead>
         <tbody>      
             <c:forEach var="code" items="${code}">                    
                 <tr>
@@ -35,6 +35,8 @@
                 </tr>	    	
             </c:forEach>  
         </tbody>
+        <br>
+        <a href=""> <input type="button" value="Modifier mes informations"></a>
 
 </body>
 </html>

@@ -60,24 +60,27 @@ public class DAO {
     }
 
     public Client LOGIN(String Contact, String Code) throws SQLException {
-
-        
-        String sql = "SELECT CODE, CONTACT FROM CLIENT where CODE = ? and CONTACT = ?";
+        Client c1 = null;
+        String sql = "SELECT * FROM CLIENT where CODE = ? and CONTACT = ?";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
-            ResultSet rs = stmt.executeQuery();
-            stmt.setString(1, Code);
-            stmt.setString(1, Contact);
-            
-                String code = rs.getString("CODE");
-                String contact = rs.getString("CONTACT");
-                Client c = new Client(contact, code);
-                
-                return c;
 
-            
+            stmt.setString(1, Code);
+            stmt.setString(2, Contact);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    String code = rs.getString("CODE");
+                    String contact = rs.getString("CONTACT");
+                    Client c = new Client(contact, code);
+                    c1 = c;
+                }
+                
+            } catch (SQLException ex) {
+
+                Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+            }
+            return c1;
         }
-        
     }
 
     public List<Categorie> listCategorieCode() throws SQLException {
@@ -168,70 +171,66 @@ public class DAO {
         return result;
     }
 
-     public void addProduit(Produit prod) throws SQLException{
-        
+    public void addProduit(Produit prod) throws SQLException {
+
         String sql = "INSERT INTO  PRODUIT(nom,fournisseur,categorie,quantite_par_unite,prix_unitaire,unites_en_stock, unites_commandees,niveau_de_reappro,indisponible)  "
-                + "VALUES(?,?,?,?,?,?,?,?,?)"; 
-        
-        try(
+                + "VALUES(?,?,?,?,?,?,?,?,?)";
+
+        try (
                 Connection connection = this.myDataSource.getConnection();
-                PreparedStatement stmt = connection.prepareStatement(sql , Statement.RETURN_GENERATED_KEYS)             
-        ){
-            
+                PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
             connection.setAutoCommit(false);
-            try{              
-                
+            try {
+
                 stmt.setString(1, prod.getNom());
                 stmt.setString(2, prod.getFournisseur());
                 stmt.setInt(3, prod.getCategorie());
                 stmt.setString(4, prod.getQuantite_par_unite());
                 stmt.setFloat(5, prod.getPrix_unitaire());
-                stmt.setInt(6,prod.getUnites_en_stock() );
+                stmt.setInt(6, prod.getUnites_en_stock());
                 stmt.setInt(7, prod.getUnites_commandees());
                 stmt.setInt(8, prod.getNiveau_de_reappro());
-                stmt.setInt(9, prod.getIndisponible());                
-               
-                stmt.executeUpdate();                
+                stmt.setInt(9, prod.getIndisponible());
+
+                stmt.executeUpdate();
                 connection.commit();
-                
-            }catch (SQLException ex) {
+
+            } catch (SQLException ex) {
                 Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
-               // throw new DAOException(ex.getMessage());
-               connection.rollback();
-            } finally{
-                connection.setAutoCommit(true); 
+                // throw new DAOException(ex.getMessage());
+                connection.rollback();
+            } finally {
+                connection.setAutoCommit(true);
             }
         }
     }
-        
-    public void suppProduit(int reference) throws SQLException {        
+
+    public void suppProduit(int reference) throws SQLException {
         String sql = "UPDATE PRODUIT SET indisponible = 1  WHERE reference = " + reference;
-        try(
+        try (
                 Connection connection = this.myDataSource.getConnection();
-                PreparedStatement stmt = connection.prepareStatement(sql )             
-        ){
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
             connection.setAutoCommit(false);
             stmt.executeUpdate();
             connection.setAutoCommit(true);
-        }        
+        }
     }
-    
- 
-    public void modifProduit(int reference, String choixModif, String modifProd) throws SQLException{
-        
-        String sql = "UPDATE PRODUIT SET "+choixModif+" = '"+modifProd+"' WHERE reference = "+reference;
-        
-        try(
+
+    public void modifProduit(int reference, String choixModif, String modifProd) throws SQLException {
+
+        String sql = "UPDATE PRODUIT SET " + choixModif + " = '" + modifProd + "' WHERE reference = " + reference;
+
+        try (
                 Connection connection = this.myDataSource.getConnection();
-                PreparedStatement stmt = connection.prepareStatement(sql)
-                ){ 
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
             connection.setAutoCommit(false);
             stmt.executeUpdate();
-            connection.setAutoCommit(true);      
-                       
+            connection.setAutoCommit(true);
+
         }
-    }    
-    
+    }
+
     public List<Commande> commandesOfClient(String CLIENT) throws DAOException, SQLException {
         List<Commande> result = new LinkedList<>();
         String sql = "SELECT * FROM COMMANDE WHERE CLIENT = ?";
@@ -373,29 +372,28 @@ public class DAO {
         return result;
     }
 
-        
-        public List<ChiffreAffaire> caByCategorie(String dateSaisie, String dateEnvoyee) throws SQLException, DAOException {
-                List<ChiffreAffaire> result = new LinkedList<>();
-                
-		String sql = "SELECT SUM(PORT) AS CA, CAT.LIBELLE FROM COMMANDE C, PRODUIT P, LIGNE L, CATEGORIE CAT WHERE C.SAISIE_LE>=? AND C.ENVOYEE_LE<=? AND C.NUMERO=L.COMMANDE AND L.PRODUIT=P.REFERENCE AND P.CATEGORIE=CAT.CODE GROUP BY CAT.LIBELLE";
-		try (Connection connection = myDataSource.getConnection(); 
-		     PreparedStatement stmt = connection.prepareStatement(sql)) {
-                        stmt.setString(1, dateSaisie);
-                        stmt.setString(2, dateEnvoyee);
-                        try (ResultSet rs = stmt.executeQuery()) {
-				while (rs.next()) { // On a trouvé
-                                    float CA = rs.getFloat("CA");
-                                    String libelle = rs.getString("LIBELLE");
-                                    ChiffreAffaire ca = new ChiffreAffaire(CA,libelle);                                    
-                                    result.add(ca);
-				} 
-			} catch (SQLException ex) {
-			Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
-			throw new DAOException(ex.getMessage());
-                        }                       
-			
-		}
-		return result;
-	}
-        
+    public List<ChiffreAffaire> caByCategorie(String dateSaisie, String dateEnvoyee) throws SQLException, DAOException {
+        List<ChiffreAffaire> result = new LinkedList<>();
+
+        String sql = "SELECT SUM(PORT) AS CA, CAT.LIBELLE FROM COMMANDE C, PRODUIT P, LIGNE L, CATEGORIE CAT WHERE C.SAISIE_LE>=? AND C.ENVOYEE_LE<=? AND C.NUMERO=L.COMMANDE AND L.PRODUIT=P.REFERENCE AND P.CATEGORIE=CAT.CODE GROUP BY CAT.LIBELLE";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, dateSaisie);
+            stmt.setString(2, dateEnvoyee);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) { // On a trouvé
+                    float CA = rs.getFloat("CA");
+                    String libelle = rs.getString("LIBELLE");
+                    ChiffreAffaire ca = new ChiffreAffaire(CA, libelle);
+                    result.add(ca);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+                throw new DAOException(ex.getMessage());
+            }
+
+        }
+        return result;
+    }
+
 }

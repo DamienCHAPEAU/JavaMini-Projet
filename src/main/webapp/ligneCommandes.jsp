@@ -11,7 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Commandes</title>
     </head>
     <body>
         <h1>Details de la commandes: ${commande}</h1>
@@ -23,15 +23,12 @@
 
                 
             <c:forEach var="prod" items="${prod}" >                    
-                <tr>
-
-                    
+                <tr>                   
                     <td>${prod.nom}</td>
                     <td>${prod.reference}</td>
                     <td>${prod.categorie}</td>
                     <td>${prod.prix_unitaire}</td>
                     <td>${prod.quantity}</td>
-                    
                 </tr>	    	
             </c:forEach>        
         </tbody>

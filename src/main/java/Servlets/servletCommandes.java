@@ -19,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 
@@ -37,8 +38,10 @@ public class servletCommandes extends HttpServlet{
 
 
             try {	
-            String val = request.getParameter("client");
-            
+            //String val = request.getParameter("client");
+            HttpSession ses = request.getSession();
+            String val = (String) ses.getAttribute("MDP");
+                    
             
             DAO dao = new DAO(DataSourceFactory.getDataSource());
             //List<Commande> code = dao.commandes();
@@ -47,9 +50,11 @@ public class servletCommandes extends HttpServlet{
 
             // On renseigne un attribut utilisé par la vue
             request.setAttribute("code", code);
-            request.setAttribute("client", val);
+            
             // On redirige vers la vue
             request.getRequestDispatcher("viewCommandes.jsp").forward(request, response);
+            
+            
 
         } catch (IOException | SQLException | ServletException e) {
             Logger.getLogger("servlet").log(Level.SEVERE, "Erreur de traitement", e);

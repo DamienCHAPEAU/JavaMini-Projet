@@ -5,7 +5,6 @@
  */
 package Servlets;
 
-import DAO.modele.Commande;
 import DAO.DAO;
 import DAO.DataSourceFactory;
 import DAO.modele.Ligne;
@@ -17,12 +16,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -37,6 +35,10 @@ public class servletLigne extends HttpServlet{
 
 
             try {	
+                 HttpSession ses = request.getSession();
+                String val2 = (String) ses.getAttribute("MDP");
+                
+                
                 String val = request.getParameter("commande");
             
             
@@ -53,7 +55,12 @@ public class servletLigne extends HttpServlet{
                  
                 prod.add(new Produit(p.getReference(), p.getNom(), p.getCategorie(), p.getPrix_unitaire(), code.get(i).getQuantity())            );
             }
-
+             
+             if((code.get(0).getNumCommande())!=((dao.commandesOfClient(val2).get(0).getNumero()))){
+                  
+                 throw new IOException("client non verifié");
+                  
+             } 
 
             // On renseigne un attribut utilisé par la vue
             //request.setAttribute("code", code);
@@ -62,7 +69,7 @@ public class servletLigne extends HttpServlet{
             // On redirige vers la vue
             request.getRequestDispatcher("ligneCommandes.jsp").forward(request, response);
 
-        } catch (IOException | ServletException e) {
+        } catch (IOException | ServletException e ) {
             Logger.getLogger("servlet").log(Level.SEVERE, "Erreur de traitement", e);
             // On renseigne un attribut utilisé par la vue
 
