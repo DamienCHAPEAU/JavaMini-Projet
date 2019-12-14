@@ -321,6 +321,64 @@ public class DAO {
         return result;
     }
 
+        public Client getClient(String CLIENT) throws DAOException, SQLException {
+        
+        String sql = "SELECT * FROM CLIENT WHERE CODE = ?";
+        Client c = null;
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql);) {
+            stmt.setString(1, CLIENT);
+
+            ResultSet rs = stmt.executeQuery();
+                while(rs.next()){
+                     c = new Client(rs.getString("CODE"), rs.getString("SOCIETE"), rs.getString("CONTACT"), rs.getString("FONCTION"), rs.getString("ADRESSE"), rs.getString("VILLE"), rs.getString("REGION"), rs.getString("CODE_POSTAL"), rs.getString("PAYS"), rs.getString("TELEPHONE"), rs.getString("FAX"));
+
+                    
+               
+                }
+
+        }
+        return c;
+    }
+    
+    
+        public void upClient(String CODE, String Societe, String Contact, String fonction, String adresse, String ville, String region, String code_postal, String pays, String tel, String Fax ) throws DAOException, SQLException, Exception {
+       
+        String sql = "UPDATE CLIENT SET SOCIETE = ?, CONTACT= ?, FONCTION= ?, ADRESSE= ?, VILLE= ?, REGION= ?, CODE_POSTAL= ?, PAYS=?, TELEPHONE= ?, FAX= ? WHERE CODE = ?";
+
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql);) {
+            stmt.setString(1, Societe);
+            stmt.setString(2, Contact);
+            stmt.setString(3, fonction);
+            stmt.setString(4, adresse);
+            stmt.setString(5, ville);
+            stmt.setString(6, region);
+            stmt.setString(7, code_postal);
+            stmt.setString(8, pays);
+            stmt.setString(9, tel);
+            stmt.setString(10, Fax);
+            stmt.setString(11, CODE);
+            
+            
+            int rs = stmt.executeUpdate();
+            
+            if(rs < 1){
+                throw new Exception("erreur");
+            }  
+            
+            }
+
+         catch (Exception e) {
+            throw new DAOException("erreur" + e.getMessage());
+        }
+        
+            
+    }
+
+    
+    
+    
     //Requete visualiser les chiffres d'affaire par pays, en choisissant la période (date de début / date de fin) sur laquelle doit porter la statistique.
     //Exemple :
     //SELECT SUM(PORT) AS CA FROM COMMANDE WHERE PAYS_LIVRAISON='France' AND SAISIE_LE>='1994-08-08' AND ENVOYEE_LE<='1994-08-15';

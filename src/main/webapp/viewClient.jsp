@@ -16,11 +16,11 @@
     <body>
         <h1>client : ${client} | Informations personnelles : </h1>
         <table border = 1>
-            <thead><td>Client</td><td>Société</td><td>Contact</td><td>Fonction</td><td>Adresse</td><td>Ville</td><td>Région</td><td>Code Postal</td><td>Pays</td><td>Téléphone</td><td>FAX</td></thead>
+            <thead><td>Société</td><td>Contact</td><td>Fonction</td><td>Adresse</td><td>Ville</td><td>Région</td><td>Code Postal</td><td>Pays</td><td>Téléphone</td><td>FAX</td></thead>
         <tbody>      
             <c:forEach var="code" items="${code}">                    
                 <tr>
-                    <td>${code.CODE}</td>
+                    
                     <td>${code.societe}</td>   
                     <td>${code.contact}</td>
                     <td>${code.fonction}</td>
@@ -36,7 +36,7 @@
             </c:forEach>  
         </tbody>
         <br>
-        <a href=""> <input type="button" value="Modifier mes informations"></a>
+        <a href="updateInfo"> <input type="button" value="Modifier mes informations"></a>
 
 </body>
 </html>
