@@ -5,7 +5,6 @@
  */
 package Servlets;
 
-import DAO.modele.Categorie;
 import DAO.DAO;
 import DAO.DataSourceFactory;
 import DAO.modele.Produit;
@@ -25,10 +24,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author pedago
+ * @author Clément
  */
-@WebServlet(name = "ProduitsByCategorie", urlPatterns = {"/ProduitsByCategorie"})
-public class servletProduitByCategorie extends HttpServlet {
+@WebServlet(name = "Panier", urlPatterns = {"/Panier"})
+public class Panier extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,21 +39,33 @@ public class servletProduitByCategorie extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException, SQLException {
+            throws ServletException, IOException, SQLException {
+       
+           DAO dao = new DAO(DataSourceFactory.getDataSource());
 
-		try {
-                        String val = request.getParameter("categorie");
-                        int valInt = Integer.parseInt(val);			
-			DAO dao = new DAO(DataSourceFactory.getDataSource());
-                        List<Produit> code = dao.produitByCategorieCode(valInt);                        
-                        request.setAttribute("code", code);		
-			
-		
-                } catch (Exception ex) {
-			Logger.getLogger("servlet").log(Level.SEVERE, "Erreur de traitement", ex);
-                        request.setAttribute("message", ex.getMessage());
-		}
-                request.getRequestDispatcher("viewProduitByCategorie.jsp").forward(request, response);
+           List<Produit> p = new ArrayList<Produit>();
+           
+           Map<String, String> m = new LinkedHashMap<>();
+           m = (Map<String, String>) request.getSession().getAttribute("map");
+           
+           
+           for(Map.Entry<String, String> entry : m.entrySet()){
+               
+                Produit p2 = dao.produitCode(entry.getKey());
+                Produit p3 = new Produit(p2.getReference(),p2.getNom(),p2.getCategorie(),p2.getPrix_unitaire(),Integer.valueOf(entry.getValue()));
+                
+                if(entry.getValue().equals("0")){
+                
+                    m.remove(entry.getKey());
+                    
+                }else{
+                    p.add(p3);
+                }
+           }
+           request.setAttribute("code", p);
+           
+          this.getServletContext().getRequestDispatcher("/panier.jsp").forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -72,7 +83,7 @@ public class servletProduitByCategorie extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(servletListCategorie.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Panier.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -87,29 +98,24 @@ public class servletProduitByCategorie extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String qte = request.getParameter("qte");
-        String ref = request.getParameter("ref");
-        
-        Map<String, String> map ;
-                
-        if(request.getSession().getAttribute("map") == null){
-        map = new LinkedHashMap<>();
         
         
-        map.put(ref, qte);
-        }else{
-        map = (Map<String, String>) request.getSession().getAttribute("map");
-        map.put(ref, qte);
+        String qteu = request.getParameter("qteu");
+        String refu = request.getParameter("refu");
         
-        }
+        Map<String, String> m = new LinkedHashMap<>();
+        m = (Map<String, String>) request.getSession().getAttribute("map");
         
-        request.getSession().setAttribute("map", map);
+        m.put(refu, qteu);
         
-
+        
+        request.getSession().setAttribute("map", m);
+        
+        
         try {
-            processRequest(request, response);  
+            processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(servletListCategorie.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Panier.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -123,5 +129,4 @@ public class servletProduitByCategorie extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
- }
-
+}

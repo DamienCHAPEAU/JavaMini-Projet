@@ -20,6 +20,7 @@
             <groupId>org.apache.derby</groupId>
             <artifactId>derby</artifactId>
             <version>10.14.1.0</version>
+            <type>jar</type>
         </dependency>
         <!-- Derby network client JDBC driver -->
         <dependency>

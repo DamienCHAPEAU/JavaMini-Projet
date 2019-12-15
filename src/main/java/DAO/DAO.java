@@ -147,9 +147,9 @@ public class DAO {
         return result;
     }
 
-    public List<Produit> produitCode(String ref) throws SQLException {
+    public Produit produitCode(String ref) throws SQLException {
 
-        List<Produit> result = new LinkedList<>();
+        Produit result = null ;
 
         String sql = "SELECT * FROM Produit WHERE REFERENCE = ?";
 
@@ -164,7 +164,7 @@ public class DAO {
                 int categorie = rs.getInt("Categorie");
                 float prix_unitaire = rs.getFloat("Prix_unitaire");
                 Produit p = new Produit(rs.getInt("REFERENCE"), nom, categorie, prix_unitaire);
-                result.add(p);
+                result = p;
 
             }
         }
