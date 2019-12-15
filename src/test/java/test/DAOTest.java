@@ -1,4 +1,4 @@
-package test;
+/*package test;
 
 import DAO.DAO;
 import DAO.DAOException;
@@ -60,7 +60,7 @@ public class DAOTest {
      * Test of testAllCodes method, of class DAO.
      *
      * @throws java.sql.SQLException
-     */
+     *\/
     @Test
     public void testAllCodes() throws SQLException {
         System.out.println("testAllCodes");
@@ -85,7 +85,7 @@ public class DAOTest {
      * Test of testListCategorieCode method, of class DAO.
      *
      * @throws java.sql.SQLException
-     */
+     *\/
     @Test
     public void testListCategorieCode() throws SQLException {
         System.out.println("testListCategorieCode");
@@ -102,7 +102,7 @@ public class DAOTest {
      *
      * @throws java.sql.SQLException
      * @throws DAO.DAOException
-     */
+     *\/
     @Test
     public void testProduitByCategorieCode() throws SQLException, DAOException {
         System.out.println("testProduitByCategorieCode");
@@ -119,7 +119,7 @@ public class DAOTest {
      * Test of testProduitCode method, of class DAO.
      *
      * @throws java.sql.SQLException
-     */
+     *\/
     @Test
     public void testProduitCode() throws SQLException {
         System.out.println("testProduitCode");
@@ -135,7 +135,7 @@ public class DAOTest {
      * Test of testProduitCodeRef method, of class DAO.
      *
      * @throws java.sql.SQLException
-     */
+     *\/
     @Test
     public void testProduitCodeRef() throws SQLException {
         System.out.println("testProduitCodeRef"); 
@@ -153,7 +153,7 @@ public class DAOTest {
      *
      * @throws java.sql.SQLException
      * @throws DAO.DAOException
-     */
+     *\/
     @Test
     public void testCommandesOfClient() throws SQLException, DAOException {
         System.out.println("CommandesOfClient");
@@ -171,7 +171,7 @@ public class DAOTest {
      *
      * @throws java.sql.SQLException
      * @throws DAO.DAOException
-     */
+     *\/
     @Test
     public void testLigneOfCommandes() throws SQLException, DAOException {
         System.out.println("LigneOfCommandes");
@@ -188,7 +188,7 @@ public class DAOTest {
      *
      * @throws java.sql.SQLException
      * @throws DAO.DAOException
-     */
+     *\/
     @Test
     public void testInfoClient() throws SQLException, DAOException {
         System.out.println("InfoClient");
@@ -213,7 +213,7 @@ public class DAOTest {
      *
      * @throws java.sql.SQLException
      * @throws DAO.DAOException
-     */
+     *\/
     @Test
     public void testCaByClient() throws SQLException, DAOException {
         System.out.println("CaByClient");
@@ -229,7 +229,7 @@ public class DAOTest {
      *
      * @throws java.sql.SQLException
      * @throws DAO.DAOException
-     */
+     *\/
     @Test
     public void testCaByPays() throws SQLException, DAOException {
         System.out.println("CaByPays");
@@ -245,7 +245,7 @@ public class DAOTest {
      *
      * @throws java.sql.SQLException
      * @throws DAO.DAOException
-     */
+     *\/
     @Test
     public void testCaByCategorie() throws SQLException, DAOException {
         System.out.println("CaByCategorie");
@@ -265,3 +265,5 @@ public class DAOTest {
     }
 
 }
+
+*/
