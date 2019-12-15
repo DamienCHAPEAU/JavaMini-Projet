@@ -195,14 +195,13 @@ public class DAO {
 
                 stmt.executeUpdate();
                 connection.commit();
-
+                
             } catch (SQLException ex) {
                 Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
                 // throw new DAOException(ex.getMessage());
                 connection.rollback();
-            } finally {
-                connection.setAutoCommit(true);
-            }
+            } 
+            
         }
     }
 
@@ -333,8 +332,6 @@ public class DAO {
                 while(rs.next()){
                      c = new Client(rs.getString("CODE"), rs.getString("SOCIETE"), rs.getString("CONTACT"), rs.getString("FONCTION"), rs.getString("ADRESSE"), rs.getString("VILLE"), rs.getString("REGION"), rs.getString("CODE_POSTAL"), rs.getString("PAYS"), rs.getString("TELEPHONE"), rs.getString("FAX"));
 
-                    
-               
                 }
 
         }
@@ -362,7 +359,7 @@ public class DAO {
             
             
             int rs = stmt.executeUpdate();
-            
+            connection.commit();
             if(rs < 1){
                 throw new Exception("erreur");
             }  
@@ -374,10 +371,7 @@ public class DAO {
         }
         
             
-    }
-
-    
-    
+    }    
     
     //Requete visualiser les chiffres d'affaire par pays, en choisissant la période (date de début / date de fin) sur laquelle doit porter la statistique.
     //Exemple :

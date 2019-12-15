@@ -21,13 +21,6 @@
             <artifactId>derby</artifactId>
             <version>10.14.1.0</version>
         </dependency>
-        <!-- Le driver JDBC utilisé seulement pour le test -->        
-        <dependency>
-            <groupId>org.hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-            <version>2.5.0</version>
-            <scope>test</scope>
-        </dependency>
         <!-- Derby network client JDBC driver -->
         <dependency>
             <groupId>org.apache.derby</groupId>
@@ -39,18 +32,30 @@
             <groupId>org.apache.derby</groupId>
             <artifactId>derbytools</artifactId>
             <version>10.14.1.0</version>
-        </dependency>
+        </dependency>              
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.5.3</version>
+        </dependency>
+        <!-- Le driver JDBC utilisé seulement pour le test -->        
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>2.0.0</version>
+            <scope>test</scope>
+        </dependency>  
         <!-- sqltool utilisé seulement pour le test pour initialiser la base -->                
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>sqltool</artifactId>
-            <version>2.5.0</version>
+            <version>2.0.0</version>
             <scope>test</scope>
         </dependency>		
         <dependency>
@@ -58,6 +63,7 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope>
+            <type>jar</type>
         </dependency>
     </dependencies>
 
@@ -90,20 +96,12 @@
                 <version>2.6</version>
                 <executions>
                     <execution>
-                        <phase>validate</phase>
+                        <phase>package</phase>
                         <goals>
                             <goal>copy</goal>
                         </goals>
-                        <configuration>
-                            <outputDirectory>${endorsed.dir}</outputDirectory>
-                            <silent>true</silent>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>javax</groupId>
-                                    <artifactId>javaee-endorsed-api</artifactId>
-                                    <version>7.0</version>
-                                    <type>jar</type>
-                                </artifactItem>
+                        <configuration>                            
+                            <artifactItems>                                
                                 <!-- for Heroku, https://projetjavaee2019.herokuapp.com/LoginPage  -->
                                 <artifactItem>
                                     <groupId>com.github.jsimone</groupId>
