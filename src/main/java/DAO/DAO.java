@@ -184,10 +184,10 @@ public class DAO {
             try {
 
                 stmt.setString(1, prod.getNom());
-                stmt.setString(2, prod.getFournisseur());
+                stmt.setInt(2, prod.getFournisseur());
                 stmt.setInt(3, prod.getCategorie());
                 stmt.setString(4, prod.getQuantite_par_unite());
-                stmt.setFloat(5, prod.getPrix_unitaire());
+                stmt.setDouble(5, prod.getPrix_unitaire());
                 stmt.setInt(6, prod.getUnites_en_stock());
                 stmt.setInt(7, prod.getUnites_commandees());
                 stmt.setInt(8, prod.getNiveau_de_reappro());

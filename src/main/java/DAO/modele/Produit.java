@@ -14,17 +14,17 @@ public class Produit {
     
     private int reference;
     private String nom;
-    private String fournisseur;
+    private int fournisseur;
     private int categorie;
     private String quantite_par_unite;
-    private float prix_unitaire;
+    private double prix_unitaire;
     private int unites_en_stock;
     private int unites_commandees;
     private int niveau_de_reappro;
     private int indisponible;
     private int quantity;
 
-    public Produit(int reference, String nom, String fournisseur, int categorie, String quantite_par_unite, float prix_unitaire, int unites_en_stock, int unites_commandees, int niveau_de_reappro, int indisponible, int quantity) {
+    public Produit(int reference, String nom, int fournisseur, int categorie, String quantite_par_unite, double prix_unitaire, int unites_en_stock, int unites_commandees, int niveau_de_reappro, int indisponible, int quantity) {
         this.reference = reference;
         this.nom = nom;
         this.fournisseur = fournisseur;
@@ -36,13 +36,13 @@ public class Produit {
         this.niveau_de_reappro = niveau_de_reappro;
         this.indisponible = indisponible;
         this.quantity = quantity;
-    }
-    
-    
+    }   
 
-    public Produit(int reference, String nom, int categorie, String quantite_par_unite, float prix_unitaire, int unites_en_stock, int unites_commandees, int niveau_de_reappro, int indisponible) {
+    
+    public Produit(int reference, String nom, int fournisseur,int categorie, String quantite_par_unite, double prix_unitaire, int unites_en_stock, int unites_commandees, int niveau_de_reappro, int indisponible) {
         this.reference = reference;
         this.nom = nom;
+        this.fournisseur = fournisseur;
         this.categorie = categorie;
         this.quantite_par_unite = quantite_par_unite;
         this.prix_unitaire = prix_unitaire;
@@ -52,18 +52,18 @@ public class Produit {
         this.indisponible = indisponible;
     }
 
-    public String getFournisseur() {
+    public int getFournisseur() {
         return fournisseur;
     }
     
-    public Produit(int ref, String nom, int categorie, float prix_unitaire) {
+    public Produit(int ref, String nom, int categorie, double prix_unitaire) {
         this.reference = ref;
         this.nom = nom;
         this.categorie = categorie;        
         this.prix_unitaire = prix_unitaire;
        
     }
-        public Produit(int ref, String nom, int categorie, float prix_unitaire, int quantity) {
+        public Produit(int ref, String nom, int categorie, double prix_unitaire, int quantity) {
         this.reference = ref;
         this.nom = nom;
         this.categorie = categorie;        
@@ -92,7 +92,7 @@ public class Produit {
         return quantite_par_unite;
     }
 
-    public float getPrix_unitaire() {
+    public double getPrix_unitaire() {
         return prix_unitaire;
     }
 
