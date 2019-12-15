@@ -51,7 +51,7 @@ public class servletLigne extends HttpServlet{
              List<Produit> prod = new LinkedList<>();
             
              for(int i = 0; i< code.size(); i++){
-                 Produit p = dao.produitCode(String.valueOf(code.get(i).getNumProduit())).get(0);
+                 Produit p = dao.produitCode(String.valueOf(code.get(i).getNumProduit()));
                  
                 prod.add(new Produit(p.getReference(), p.getNom(), p.getCategorie(), p.getPrix_unitaire(), code.get(i).getQuantity())            );
             }

@@ -14,7 +14,10 @@
     <body>
         <h1>Bonjour ${client}</h1>
 
-
+         <a href="ListeCategorie">Liste des Categories</a>
+         <br>
+         <a href="Produit">Liste des produits</a>
+         <br>
         <a href="Commandes">Listes Commandes</a>
         <br>
         <a href="Client">Info Client</a>
