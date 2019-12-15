@@ -92,18 +92,14 @@ public class DatabaseInitializer implements ServletContextListener {
 
     private void fillDatabase() {
         Logger.getLogger(this.getClass().getName()).log(Level.INFO, "Filling database");
-
         try (Connection connection = DataSourceFactory.getDataSource().getConnection();) {
             ScriptRunner runner = new ScriptRunner(connection);
             runner.setLogWriter(null); // Prevent spamming the console
-
             Reader data = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("comptoirs_data.sql")));
-
             runner.runScript(data);
-
         } catch (SQLException e) {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, e);
         }
-        Logger.getLogger(this.getClass().getName()).log(Level.INFO, "Done populating database");
+        Logger.getLogger(this.getClass().getName()).log(Level.INFO, "Database succesfully fill");
     }
 }
