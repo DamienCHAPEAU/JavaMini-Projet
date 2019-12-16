@@ -17,6 +17,7 @@
         <title>Info Client</title>
     </head>
     <body>
+        <div><h4></h4></div>  
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">

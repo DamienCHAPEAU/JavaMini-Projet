@@ -22,8 +22,11 @@
     </head>
     <body>
         <div><h4>${message}</h4></div>        
+        
+       
+        
         <c:choose>
-            <c:when test="${ !empty sessionScope.LOG && !empty sessionScope.MDP }">
+            <c:when test="${ !empty sessionScope.MDP }">
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav">
@@ -80,6 +83,7 @@
                 <tr>
                     <td>Libellé</td>
                     <td>Description</td>
+                   
                 </tr>
             </thead>
             <tbody>                

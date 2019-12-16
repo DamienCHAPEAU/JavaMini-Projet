@@ -17,6 +17,7 @@
     </head>
 
     <body>
+        <div><h4></h4></div>  
         
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -43,6 +44,7 @@
             </div>            
         </nav>
         <br>
+        
         <h1>Commande du client : ${client}</h1>
         <br>        
 

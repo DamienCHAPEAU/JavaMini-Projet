@@ -16,6 +16,8 @@
         <title>Votre Panier :</title>
     </head>
     <body>
+        <div><h4></h4></div>  
+        
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
@@ -44,9 +46,10 @@
         <h1>Votre Panier :</h1>
         <br>
         <!--${sessionScope.map}-->
+        
 
         <table class="table table-bordered">
-            <thead><td>Nom</td><td>Categorie</td><td>Prix</td><td>ref</td><td>quantité</td></thead>
+            <thead><td>Nom</td><td>Categorie</td><td>Prix</td><td>ref</td><td>quantité</td><td>${ sessionScope.map }</td></thead>
         <tbody>                
             <c:forEach var="code" items="${code}">                    
                 <tr>

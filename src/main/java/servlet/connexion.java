@@ -10,7 +10,9 @@ import DAO.DataSourceFactory;
 import DAO.modele.Client;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -54,6 +56,8 @@ public class connexion extends HttpServlet {
                     HttpSession session = request.getSession();
                     session.setAttribute("client", Contact);
                     session.setAttribute("MDP", MDP);
+                    Map<String, String> m = new LinkedHashMap<>();
+                    session.setAttribute("map", m);
                     Logger.getLogger("IDENTIFIANT OK");
                     
                     this.getServletContext().getRequestDispatcher("/member.jsp").forward(request, response);
