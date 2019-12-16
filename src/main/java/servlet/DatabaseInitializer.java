@@ -1,4 +1,4 @@
-package Servlets;
+package servlet;
 
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;

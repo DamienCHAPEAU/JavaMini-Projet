@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servlets;
+package servlet;
 
-import DAO.modele.ChiffreAffaire;
+import DAO.modele.Client;
 import DAO.DAO;
 import DAO.DataSourceFactory;
-
 import java.io.IOException;
-
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -20,43 +18,48 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author pedago
  */
-@WebServlet(name = "CAclient", urlPatterns = {"/CAclient"})
-public class servletCAclient extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+@WebServlet(name = "Client", urlPatterns = "/Client")
+public class servletClient extends HttpServlet{
+    
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException, SQLException {
+            throws ServletException, IOException, Exception {
 
-		try {
-                        
-                        String datesaisie = request.getParameter("Saisie_le");
-                        String dateenvoyee = request.getParameter("Envoyee_le");
-                        			
-			DAO dao = new DAO(DataSourceFactory.getDataSource());
-                        List<ChiffreAffaire> code = dao.caByClient(datesaisie, dateenvoyee);
-                        request.setAttribute("code", code);		
-			
-		
-                } catch (Exception ex) {
-			Logger.getLogger("servlet").log(Level.SEVERE, "Erreur de traitement", ex);
-                        request.setAttribute("message", ex.getMessage());
-		}
-                request.getRequestDispatcher("viewCAclient.jsp").forward(request, response);
+
+            try {	
+            //String val = request.getParameter("client");
+            HttpSession ses = request.getSession();
+            String val = (String) ses.getAttribute("MDP");
+            
+            
+            DAO dao = new DAO(DataSourceFactory.getDataSource());
+            //List<Commande> code = dao.commandes();
+            List<Client> code = dao.infoClient(val);
+
+
+            // On renseigne un attribut utilisé par la vue
+            request.setAttribute("code", code);
+            //request.setAttribute("client", val);
+            // On redirige vers la vue
+            request.getRequestDispatcher("viewClient.jsp").forward(request, response);
+
+        } catch (IOException | ServletException e) {
+            Logger.getLogger("servlet").log(Level.SEVERE, "Erreur de traitement", e);
+            // On renseigne un attribut utilisé par la vue
+
+            // On redirige vers la page d'erreur
+            request.getRequestDispatcher("vue/errorView.jsp").forward(request, response);
+        }
+
     }
-
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -72,7 +75,9 @@ public class servletCAclient extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(servletCAclient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(servletClient.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(servletClient.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -90,7 +95,9 @@ public class servletCAclient extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(servletCAclient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(servletListCategorie.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(servletCommandes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -103,5 +110,4 @@ public class servletCAclient extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servlets;
+package servlet;
 
-import DAO.modele.Client;
+import DAO.modele.Categorie;
+import DAO.modele.Commande;
 import DAO.DAO;
 import DAO.DataSourceFactory;
 import java.io.IOException;
@@ -20,14 +21,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+
+
+
+@WebServlet(name = "Commandes", urlPatterns = "/Commandes")
+
 /**
  *
  * @author pedago
  */
-
-@WebServlet(name = "Client", urlPatterns = "/Client")
-public class servletClient extends HttpServlet{
-    
+public class servletCommandes extends HttpServlet{
+ 
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
@@ -37,20 +41,22 @@ public class servletClient extends HttpServlet{
             //String val = request.getParameter("client");
             HttpSession ses = request.getSession();
             String val = (String) ses.getAttribute("MDP");
-            
+                    
             
             DAO dao = new DAO(DataSourceFactory.getDataSource());
             //List<Commande> code = dao.commandes();
-            List<Client> code = dao.infoClient(val);
+            List<Commande> code = dao.commandesOfClient(val);
 
 
             // On renseigne un attribut utilisé par la vue
             request.setAttribute("code", code);
-            //request.setAttribute("client", val);
+            
             // On redirige vers la vue
-            request.getRequestDispatcher("viewClient.jsp").forward(request, response);
+            request.getRequestDispatcher("viewCommandes.jsp").forward(request, response);
+            
+            
 
-        } catch (IOException | ServletException e) {
+        } catch (IOException | SQLException | ServletException e) {
             Logger.getLogger("servlet").log(Level.SEVERE, "Erreur de traitement", e);
             // On renseigne un attribut utilisé par la vue
 
@@ -75,9 +81,9 @@ public class servletClient extends HttpServlet{
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(servletClient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(servletCommandes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(servletClient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(servletCommandes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servlets;
+package servlet;
 
-import DAO.modele.ChiffreAffaire;
 import DAO.DAO;
 import DAO.DataSourceFactory;
-
+import DAO.modele.Produit;
 import java.io.IOException;
-
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -25,8 +25,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author pedago
  */
-@WebServlet(name = "CApays", urlPatterns = {"/CApays"})
-public class servletCApays extends HttpServlet {
+@WebServlet(name = "Produit", urlPatterns = {"/Produit"})
+public class servletProduit extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,23 +38,31 @@ public class servletCApays extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException, SQLException {
+            throws ServletException, IOException, SQLException {
 
-		try {
-                        
-                        String datesaisie = request.getParameter("Saisie_le");
-                        String dateenvoyee = request.getParameter("Envoyee_le");
-                        			
-			DAO dao = new DAO(DataSourceFactory.getDataSource());
-                        List<ChiffreAffaire> code = dao.caByPays(datesaisie, dateenvoyee);
-                        request.setAttribute("code", code);		
-			
-		
-                } catch (Exception ex) {
-			Logger.getLogger("servlet").log(Level.SEVERE, "Erreur de traitement", ex);
-                        request.setAttribute("message", ex.getMessage());
-		}
-                request.getRequestDispatcher("viewCapays.jsp").forward(request, response);
+        try {
+            String refP = request.getParameter("refP");
+            // Créér le ExtendedDAO avec sa source de données
+            DAO dao = new DAO(DataSourceFactory.getDataSource());
+
+            if (refP == null) {
+                List<Produit> code = dao.produitCode();
+                request.setAttribute("code", code);
+            } else {
+                Produit code = dao.produitCode(refP);
+                request.setAttribute("code", code);
+            }
+            // request.setAttribute("code", code);
+            //request.setAttribute("ref", ref);
+           
+
+            // On continue vers la page JSP sélectionnée
+
+        } catch (Exception ex) {
+            Logger.getLogger("servlet").log(Level.SEVERE, "Erreur de traitement", ex);
+            request.setAttribute("message", ex.getMessage());
+        }
+        request.getRequestDispatcher("viewProduit.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -72,7 +80,7 @@ public class servletCApays extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(servletCAclient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(servletProduit.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -87,10 +95,27 @@ public class servletCApays extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        String qte = request.getParameter("qte");
+        String ref = request.getParameter("ref");
+
+        Map<String, String> map;
+
+        if (request.getSession().getAttribute("map") == null) {
+            map = new LinkedHashMap<>();
+
+            map.put(ref, qte);
+        } else {
+            map = (Map<String, String>) request.getSession().getAttribute("map");
+            map.put(ref, qte);
+        }
+
+        request.getSession().setAttribute("map", map);
+
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(servletCAclient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(servletProduit.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

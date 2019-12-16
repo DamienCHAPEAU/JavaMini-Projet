@@ -3,17 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servlets;
+package servlet;
 
+import DAO.modele.ChiffreAffaire;
 import DAO.DAO;
 import DAO.DataSourceFactory;
-import DAO.modele.Produit;
+
 import java.io.IOException;
+
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -24,10 +23,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Clément
+ * @author pedago
  */
-@WebServlet(name = "Panier", urlPatterns = {"/Panier"})
-public class Panier extends HttpServlet {
+@WebServlet(name = "CAcategorie", urlPatterns = {"/CAcategorie"})
+public class servletCAcategorie extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,33 +38,23 @@ public class Panier extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
-       
-           DAO dao = new DAO(DataSourceFactory.getDataSource());
+		throws ServletException, IOException, SQLException {
 
-           List<Produit> p = new ArrayList<Produit>();
-           
-           Map<String, String> m = new LinkedHashMap<>();
-           m = (Map<String, String>) request.getSession().getAttribute("map");
-           
-           
-           for(Map.Entry<String, String> entry : m.entrySet()){
-               
-                Produit p2 = dao.produitCode(entry.getKey());
-                Produit p3 = new Produit(p2.getReference(),p2.getNom(),p2.getCategorie(),p2.getPrix_unitaire(),Integer.valueOf(entry.getValue()));
-                
-                if(entry.getValue().equals("0")){
-                
-                    m.remove(entry.getKey());
-                    
-                }else{
-                    p.add(p3);
-                }
-           }
-           request.setAttribute("code", p);
-           
-          this.getServletContext().getRequestDispatcher("/panier.jsp").forward(request, response);
-
+		try {
+                        
+                        String datesaisie = request.getParameter("Saisie_le");
+                        String dateenvoyee = request.getParameter("Envoyee_le");
+                        			
+			DAO dao = new DAO(DataSourceFactory.getDataSource());
+                        List<ChiffreAffaire> code = dao.caByCategorie(datesaisie, dateenvoyee);
+                        request.setAttribute("code", code);		
+			
+		
+                } catch (Exception ex) {
+			Logger.getLogger("servlet").log(Level.SEVERE, "Erreur de traitement", ex);
+                        request.setAttribute("message", ex.getMessage());
+		}
+                request.getRequestDispatcher("viewCacategorie.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -83,7 +72,7 @@ public class Panier extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(Panier.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(servletCAclient.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -98,24 +87,10 @@ public class Panier extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
-        String qteu = request.getParameter("qteu");
-        String refu = request.getParameter("refu");
-        
-        Map<String, String> m = new LinkedHashMap<>();
-        m = (Map<String, String>) request.getSession().getAttribute("map");
-        
-        m.put(refu, qteu);
-        
-        
-        request.getSession().setAttribute("map", m);
-        
-        
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(Panier.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(servletCAclient.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

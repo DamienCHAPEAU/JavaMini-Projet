@@ -11,7 +11,7 @@
     <listener>
         <description>ServletContextListener</description>
         <listener-class>
-                 Servlets.DatabaseInitializer
+                 servlet.DatabaseInitializer
         </listener-class>
     </listener>
 </web-app>

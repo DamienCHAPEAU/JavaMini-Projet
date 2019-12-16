@@ -3,18 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servlets;
+package servlet;
 
-import DAO.modele.Categorie;
+import DAO.modele.ChiffreAffaire;
 import DAO.DAO;
 import DAO.DataSourceFactory;
-import DAO.modele.Produit;
+
 import java.io.IOException;
+
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -27,8 +25,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author pedago
  */
-@WebServlet(name = "ProduitsByCategorie", urlPatterns = {"/ProduitsByCategorie"})
-public class servletProduitByCategorie extends HttpServlet {
+@WebServlet(name = "CApays", urlPatterns = {"/CApays"})
+public class servletCApays extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +41,12 @@ public class servletProduitByCategorie extends HttpServlet {
 		throws ServletException, IOException, SQLException {
 
 		try {
-                        String val = request.getParameter("categorie");
-                        int valInt = Integer.parseInt(val);			
+                        
+                        String datesaisie = request.getParameter("Saisie_le");
+                        String dateenvoyee = request.getParameter("Envoyee_le");
+                        			
 			DAO dao = new DAO(DataSourceFactory.getDataSource());
-                        List<Produit> code = dao.produitByCategorieCode(valInt);                        
+                        List<ChiffreAffaire> code = dao.caByPays(datesaisie, dateenvoyee);
                         request.setAttribute("code", code);		
 			
 		
@@ -54,7 +54,7 @@ public class servletProduitByCategorie extends HttpServlet {
 			Logger.getLogger("servlet").log(Level.SEVERE, "Erreur de traitement", ex);
                         request.setAttribute("message", ex.getMessage());
 		}
-                request.getRequestDispatcher("viewProduitByCategorie.jsp").forward(request, response);
+                request.getRequestDispatcher("viewCapays.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -72,7 +72,7 @@ public class servletProduitByCategorie extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(servletListCategorie.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(servletCAclient.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -87,29 +87,10 @@ public class servletProduitByCategorie extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String qte = request.getParameter("qte");
-        String ref = request.getParameter("ref");
-        
-        Map<String, String> map ;
-                
-        if(request.getSession().getAttribute("map") == null){
-        map = new LinkedHashMap<>();
-        
-        
-        map.put(ref, qte);
-        }else{
-        map = (Map<String, String>) request.getSession().getAttribute("map");
-        map.put(ref, qte);
-        
-        }
-        
-        request.getSession().setAttribute("map", map);
-        
-
         try {
-            processRequest(request, response);  
+            processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(servletListCategorie.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(servletCAclient.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -123,5 +104,4 @@ public class servletProduitByCategorie extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
- }
-
+}

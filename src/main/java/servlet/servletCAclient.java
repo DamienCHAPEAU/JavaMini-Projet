@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servlets;
+package servlet;
 
 import DAO.modele.ChiffreAffaire;
 import DAO.DAO;
@@ -25,8 +25,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author pedago
  */
-@WebServlet(name = "CAcategorie", urlPatterns = {"/CAcategorie"})
-public class servletCAcategorie extends HttpServlet {
+@WebServlet(name = "CAclient", urlPatterns = {"/CAclient"})
+public class servletCAclient extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,7 +46,7 @@ public class servletCAcategorie extends HttpServlet {
                         String dateenvoyee = request.getParameter("Envoyee_le");
                         			
 			DAO dao = new DAO(DataSourceFactory.getDataSource());
-                        List<ChiffreAffaire> code = dao.caByCategorie(datesaisie, dateenvoyee);
+                        List<ChiffreAffaire> code = dao.caByClient(datesaisie, dateenvoyee);
                         request.setAttribute("code", code);		
 			
 		
@@ -54,7 +54,7 @@ public class servletCAcategorie extends HttpServlet {
 			Logger.getLogger("servlet").log(Level.SEVERE, "Erreur de traitement", ex);
                         request.setAttribute("message", ex.getMessage());
 		}
-                request.getRequestDispatcher("viewCacategorie.jsp").forward(request, response);
+                request.getRequestDispatcher("viewCAclient.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
