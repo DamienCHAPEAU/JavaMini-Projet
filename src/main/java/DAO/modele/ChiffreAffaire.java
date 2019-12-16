@@ -11,10 +11,10 @@ package DAO.modele;
  */
 public class ChiffreAffaire {
     
-    private float CA;
+    private double CA;
     private String client;
 
-    public ChiffreAffaire(float CA, String client) {
+    public ChiffreAffaire(double CA, String client) {
         this.CA = CA;
         this.client = client;
     }
@@ -24,7 +24,7 @@ public class ChiffreAffaire {
         return client;
     }
 
-    public float getCA() {
+    public double getCA() {
         return CA;
     }
     

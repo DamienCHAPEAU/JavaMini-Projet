@@ -1,4 +1,4 @@
-/*package test;
+package test;
 
 import DAO.DAO;
 import DAO.DAOException;
@@ -31,11 +31,11 @@ public class DAOTest {
     public void setUp() throws SQLException, IOException, SqlToolError {
         // On utilise la base de données de test
         myDataSource = getTestDataSource();
-        myConnection = myDataSource.getConnection();
+        myConnection = myDataSource.getConnection();        
         // On crée le schema de la base de test
-        executeSQLScript(myConnection, "comptoirs_schema_derby.sql");
+        executeSQLScript(myConnection, "../servlet/comptoirs_schema_derby.sql");
         // On y met des données
-        executeSQLScript(myConnection, "comptoirs_data.sql");
+        executeSQLScript(myConnection, "../servlet/comptoirs_data.sql");
 
         this.myDAO = new DAO(myDataSource);
     }
@@ -60,32 +60,23 @@ public class DAOTest {
      * Test of testAllCodes method, of class DAO.
      *
      * @throws java.sql.SQLException
-     *\/
+     */
     @Test
     public void testAllCodes() throws SQLException {
         System.out.println("testAllCodes");
         List<Client> result = this.myDAO.allCodes();
-        Client expResult = new Client("ALFKI", "Alfreds Futterkiste", "Maria Anders", "Représentant(e)", "Obere Str. 57", "Berlin", null, "12209", "Allemagne", "030-0074321", "030-0076545");
-
+        Client expResult = new Client("ALFKI", "Alfreds Futterkiste", "Maria Anders");
         // on vérifie les données du premier Client
         assertEquals(expResult.getCODE(), result.get(0).getCODE());
         assertEquals(expResult.getSociete(), result.get(0).getSociete());
         assertEquals(expResult.getContact(), result.get(0).getContact());
-        assertEquals(expResult.getFonction(), result.get(0).getFonction());
-        assertEquals(expResult.getAdresse(), result.get(0).getAdresse());
-        assertEquals(expResult.getVille(), result.get(0).getVille());
-        assertEquals(expResult.getRegion(), result.get(0).getRegion());
-        assertEquals(expResult.getCodePostal(), result.get(0).getCodePostal());
-        assertEquals(expResult.getPays(), result.get(0).getPays());
-        assertEquals(expResult.getTelephone(), result.get(0).getTelephone());
-        assertEquals(expResult.getFax(), result.get(0).getFax());
     }
     
     /**
      * Test of testListCategorieCode method, of class DAO.
      *
      * @throws java.sql.SQLException
-     *\/
+     */
     @Test
     public void testListCategorieCode() throws SQLException {
         System.out.println("testListCategorieCode");
@@ -102,7 +93,7 @@ public class DAOTest {
      *
      * @throws java.sql.SQLException
      * @throws DAO.DAOException
-     *\/
+     */
     @Test
     public void testProduitByCategorieCode() throws SQLException, DAOException {
         System.out.println("testProduitByCategorieCode");
@@ -112,14 +103,13 @@ public class DAOTest {
         assertEquals(expResult.getReference(), result.get(0).getReference());
         assertEquals(expResult.getNom(), result.get(0).getNom());
         assertEquals(expResult.getCategorie(), result.get(0).getCategorie());
-        assertEquals(expResult.getPrix_unitaire(), result.get(0).getPrix_unitaire());
     }
     
     /**
      * Test of testProduitCode method, of class DAO.
      *
      * @throws java.sql.SQLException
-     *\/
+     */
     @Test
     public void testProduitCode() throws SQLException {
         System.out.println("testProduitCode");
@@ -129,23 +119,21 @@ public class DAOTest {
         assertEquals(expResult.getReference(), result.get(0).getReference());
         assertEquals(expResult.getNom(), result.get(0).getNom());
         assertEquals(expResult.getCategorie(), result.get(0).getCategorie());
-        assertEquals(expResult.getPrix_unitaire(), result.get(0).getPrix_unitaire());
     }
     /**
      * Test of testProduitCodeRef method, of class DAO.
      *
      * @throws java.sql.SQLException
-     *\/
+     */
     @Test
     public void testProduitCodeRef() throws SQLException {
         System.out.println("testProduitCodeRef"); 
-        List<Produit> result = this.myDAO.produitCode("1");
+        Produit result = this.myDAO.produitCode("1");
         Produit expResult = new Produit(1, "Chai", 1, 1, "10 boîtes x 20 sacs", 90.00, 39, 0, 10, 0);
         //on vérifie les données du premier produit
-        assertEquals(expResult.getReference(), result.get(0).getReference());
-        assertEquals(expResult.getNom(), result.get(0).getNom());
-        assertEquals(expResult.getCategorie(), result.get(0).getCategorie());
-        assertEquals(expResult.getPrix_unitaire(), result.get(0).getPrix_unitaire());
+        assertEquals(expResult.getReference(), result.getReference());
+        assertEquals(expResult.getNom(), result.getNom());
+        assertEquals(expResult.getCategorie(), result.getCategorie());
     }
     
     /**
@@ -153,7 +141,7 @@ public class DAOTest {
      *
      * @throws java.sql.SQLException
      * @throws DAO.DAOException
-     *\/
+     */
     @Test
     public void testCommandesOfClient() throws SQLException, DAOException {
         System.out.println("CommandesOfClient");
@@ -171,7 +159,7 @@ public class DAOTest {
      *
      * @throws java.sql.SQLException
      * @throws DAO.DAOException
-     *\/
+     */
     @Test
     public void testLigneOfCommandes() throws SQLException, DAOException {
         System.out.println("LigneOfCommandes");
@@ -188,12 +176,12 @@ public class DAOTest {
      *
      * @throws java.sql.SQLException
      * @throws DAO.DAOException
-     *\/
+     */
     @Test
     public void testInfoClient() throws SQLException, DAOException {
         System.out.println("InfoClient");
         List<Client> result = this.myDAO.infoClient("VINET");
-        Client expResult = new Client("VINET", "Vins et alcools Chevalier", "Paul Henriot", "Chef comptable", "59 rue de l'Abbaye", "Reims", null, "51100", "France", "26.47.15.10", "26.47.15.11");     
+        Client expResult = new Client("VINET", "Vins et alcools Chevalier", "Paul Henriot", "Chef comptable", "59 rue de l'Abbaye", "Reims", null, "51100     ", "France", "26.47.15.10", "26.47.15.11");     
         //on vérifie les données du premier produit
         assertEquals(expResult.getCODE(), result.get(0).getCODE());
         assertEquals(expResult.getSociete(), result.get(0).getSociete());
@@ -213,14 +201,13 @@ public class DAOTest {
      *
      * @throws java.sql.SQLException
      * @throws DAO.DAOException
-     *\/
+     */
     @Test
     public void testCaByClient() throws SQLException, DAOException {
         System.out.println("CaByClient");
         List<ChiffreAffaire> result = this.myDAO.caByClient("1994-08-08","1994-08-15");
-        ChiffreAffaire expResult = new ChiffreAffaire((float) 329.00, "HANAR");     
+        ChiffreAffaire expResult = new ChiffreAffaire(11330.00, "HANAR");     
         //on vérifie les données du premier produit
-        assertEquals(expResult.getCA(), result.get(0).getCA());
         assertEquals(expResult.getClient(), result.get(0).getClient());
     }
     
@@ -229,14 +216,13 @@ public class DAOTest {
      *
      * @throws java.sql.SQLException
      * @throws DAO.DAOException
-     *\/
+     */
     @Test
     public void testCaByPays() throws SQLException, DAOException {
         System.out.println("CaByPays");
         List<ChiffreAffaire> result = this.myDAO.caByPays("1994-08-08","1994-08-15");
-        ChiffreAffaire expResult = new ChiffreAffaire((float) 256.00, "Belgique");     
+        ChiffreAffaire expResult = new ChiffreAffaire(23300.00, "Brésil");
         //on vérifie les données du premier produit
-        assertEquals(expResult.getCA(), result.get(0).getCA());
         assertEquals(expResult.getClient(), result.get(0).getClient());
     }
     
@@ -245,14 +231,13 @@ public class DAOTest {
      *
      * @throws java.sql.SQLException
      * @throws DAO.DAOException
-     *\/
+     */
     @Test
     public void testCaByCategorie() throws SQLException, DAOException {
         System.out.println("CaByCategorie");
         List<ChiffreAffaire> result = this.myDAO.caByCategorie("1994-08-08","1994-08-15");
-        ChiffreAffaire expResult = new ChiffreAffaire((float) 741.00, "Boissons");     
+        ChiffreAffaire expResult = new ChiffreAffaire(2855.00, "Poissons et fruits de mer");     
         //on vérifie les données du premier produit
-        assertEquals(expResult.getCA(), result.get(0).getCA());
         assertEquals(expResult.getClient(), result.get(0).getClient());
     }
 
@@ -266,4 +251,3 @@ public class DAOTest {
 
 }
 
-*/

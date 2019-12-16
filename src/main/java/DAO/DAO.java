@@ -379,14 +379,14 @@ public class DAO {
     public List<ChiffreAffaire> caByClient(String dateSaisie, String dateEnvoyee) throws SQLException, DAOException {
         List<ChiffreAffaire> result = new LinkedList<>();
 
-        String sql = "SELECT SUM(PORT) AS CA,CLIENT FROM COMMANDE WHERE SAISIE_LE>=? AND ENVOYEE_LE<=? GROUP BY CLIENT";
+        String sql = "SELECT SUM(L.QUANTITE*P.PRIX_UNITAIRE) AS CA, C.CLIENT FROM COMMANDE C,PRODUIT P,LIGNE L WHERE P.REFERENCE=L.PRODUIT AND C.NUMERO=L.COMMANDE AND C.SAISIE_LE>=? AND C.ENVOYEE_LE<=? GROUP BY CLIENT";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, dateSaisie);
             stmt.setString(2, dateEnvoyee);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) { // On a trouvé
-                    float CA = rs.getFloat("CA");
+                    double CA = rs.getDouble("CA");
                     String client = rs.getString("CLIENT");
                     ChiffreAffaire ca = new ChiffreAffaire(CA, client);
                     result.add(ca);
@@ -402,15 +402,14 @@ public class DAO {
 
     public List<ChiffreAffaire> caByPays(String dateSaisie, String dateEnvoyee) throws SQLException, DAOException {
         List<ChiffreAffaire> result = new LinkedList<>();
-
-        String sql = "SELECT SUM(PORT) AS CA,PAYS_LIVRAISON FROM COMMANDE WHERE SAISIE_LE>=? AND ENVOYEE_LE<=? GROUP BY PAYS_LIVRAISON";
+        String sql = "SELECT SUM(L.QUANTITE*P.PRIX_UNITAIRE) AS CA, C.PAYS_LIVRAISON FROM COMMANDE C,PRODUIT P,LIGNE L WHERE P.REFERENCE=L.PRODUIT AND C.NUMERO=L.COMMANDE AND C.SAISIE_LE>=? AND C.ENVOYEE_LE<=? GROUP BY PAYS_LIVRAISON";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, dateSaisie);
             stmt.setString(2, dateEnvoyee);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) { // On a trouvé
-                    float CA = rs.getFloat("CA");
+                    double CA = rs.getDouble("CA");
                     String pays = rs.getString("PAYS_LIVRAISON");
                     ChiffreAffaire ca = new ChiffreAffaire(CA, pays);
                     result.add(ca);
@@ -427,14 +426,14 @@ public class DAO {
     public List<ChiffreAffaire> caByCategorie(String dateSaisie, String dateEnvoyee) throws SQLException, DAOException {
         List<ChiffreAffaire> result = new LinkedList<>();
 
-        String sql = "SELECT SUM(PORT) AS CA, CAT.LIBELLE FROM COMMANDE C, PRODUIT P, LIGNE L, CATEGORIE CAT WHERE C.SAISIE_LE>=? AND C.ENVOYEE_LE<=? AND C.NUMERO=L.COMMANDE AND L.PRODUIT=P.REFERENCE AND P.CATEGORIE=CAT.CODE GROUP BY CAT.LIBELLE";
+        String sql = "SELECT SUM(L.QUANTITE*P.PRIX_UNITAIRE) AS CA, CAT.LIBELLE FROM COMMANDE C,PRODUIT P,LIGNE L, CATEGORIE CAT WHERE C.SAISIE_LE>=? AND C.ENVOYEE_LE<=? AND C.NUMERO=L.COMMANDE AND L.PRODUIT=P.REFERENCE AND P.CATEGORIE=CAT.CODE GROUP BY CAT.LIBELLE";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, dateSaisie);
             stmt.setString(2, dateEnvoyee);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) { // On a trouvé
-                    float CA = rs.getFloat("CA");
+                    double CA = rs.getDouble("CA");
                     String libelle = rs.getString("LIBELLE");
                     ChiffreAffaire ca = new ChiffreAffaire(CA, libelle);
                     result.add(ca);
