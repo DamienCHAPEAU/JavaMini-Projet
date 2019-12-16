@@ -9,10 +9,9 @@ import DAO.DAO;
 import DAO.DataSourceFactory;
 import DAO.modele.Produit;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -23,10 +22,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author pedago
+ * @author damsc
  */
-@WebServlet(name = "Produit", urlPatterns = {"/Produit"})
-public class servletProduit extends HttpServlet {
+@WebServlet(name = "ProduitAdmin", urlPatterns = {"/ProduitAdmin"})
+public class servletProduitAdmin extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -62,10 +61,11 @@ public class servletProduit extends HttpServlet {
             Logger.getLogger("servlet").log(Level.SEVERE, "Erreur de traitement", ex);
             request.setAttribute("message", ex.getMessage());
         }
-        request.getRequestDispatcher("viewProduit.jsp").forward(request, response);
+        request.getRequestDispatcher("viewProduitAdmin.jsp").forward(request, response);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -80,7 +80,7 @@ public class servletProduit extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(servletProduit.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(servletProduitAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -95,28 +95,10 @@ public class servletProduit extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String qte = request.getParameter("qte");
-        String ref = request.getParameter("ref");
-
-        Map<String, String> map;
-
-        if (request.getSession().getAttribute("map") == null) {
-            map = new LinkedHashMap<>();
-
-            map.put(ref, qte);
-        } else {
-            map = (Map<String, String>) request.getSession().getAttribute("map");
-            map.put(ref, qte);
-        }
-
-        request.setAttribute("MessageprodCat", "id : "+ref+"  ajouté "+qte+" fois au panier");
-        request.getSession().setAttribute("map", map);
-
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(servletProduit.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(servletProduitAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

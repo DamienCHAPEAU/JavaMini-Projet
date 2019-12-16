@@ -52,7 +52,7 @@
                         <a class="nav-link" href="ListeCategorie">Liste des Categories</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="Produit">Liste des produits</a>
+                        <a class="nav-link" href="ProduitAdmin">Liste des produits</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="CAcategorie">Chiffre d'affaires catégorie</a>

@@ -74,7 +74,7 @@ public class DAO {
                     Client c = new Client(contact, code);
                     c1 = c;
                 }
-                
+
             } catch (SQLException ex) {
 
                 Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
@@ -149,7 +149,7 @@ public class DAO {
 
     public Produit produitCode(String ref) throws SQLException {
 
-        Produit result = null ;
+        Produit result = null;
 
         String sql = "SELECT * FROM Produit WHERE REFERENCE = ?";
 
@@ -176,7 +176,7 @@ public class DAO {
         String sql = "INSERT INTO COMMANDE (CLIENT,DESTINATAIRE,ADRESSE_LIVRAISON,VILLE_LIVRAISON,CODE_POSTAL_LIVRAIS,PAYS_LIVRAISON) "
                 + "VALUES(?,?,?,?,?,?)";
 
-        int y = 0 ;
+        int y = 0;
         ResultSet rs = null;
         try (
                 Connection connection = this.myDataSource.getConnection();
@@ -193,26 +193,25 @@ public class DAO {
                 stmt.setString(6, prod.getPays());
 
                 stmt.executeUpdate();
-                
+
                 rs = stmt.getGeneratedKeys();
                 while (rs.next()) {
-                 y = rs.getInt(1);
+                    y = rs.getInt(1);
                 }
                 connection.commit();
-                
+
             } catch (SQLException ex) {
                 Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
                 // throw new DAOException(ex.getMessage());
                 connection.rollback();
-            } 
-            
+            }
+
         }
-        
+
         return y;
     }
-       
-        
-        public void addLigne(int commande, String prod, String quant) throws SQLException {
+
+    public void addLigne(int commande, String prod, String quant) throws SQLException {
 
         String sql = "INSERT INTO LIGNE (COMMANDE,PRODUIT,QUANTITE)  VALUES(?,?,?)";
 
@@ -229,15 +228,16 @@ public class DAO {
 
                 stmt.executeUpdate();
                 connection.commit();
-                
+
             } catch (SQLException ex) {
                 Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
                 // throw new DAOException(ex.getMessage());
                 connection.rollback();
-            } 
-            
+            }
+
         }
     }
+
     public void addProduit(Produit prod) throws SQLException {
 
         String sql = "INSERT INTO  PRODUIT(nom,fournisseur,categorie,quantite_par_unite,prix_unitaire,unites_en_stock, unites_commandees,niveau_de_reappro,indisponible)  "
@@ -262,13 +262,13 @@ public class DAO {
 
                 stmt.executeUpdate();
                 connection.commit();
-                
+
             } catch (SQLException ex) {
                 Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
                 // throw new DAOException(ex.getMessage());
                 connection.rollback();
-            } 
-            
+            }
+
         }
     }
 
@@ -286,7 +286,7 @@ public class DAO {
     public void modifProduit(int reference, String choixModif, String modifProd) throws SQLException {
 
         String sql = "UPDATE PRODUIT SET " + choixModif + " = '" + modifProd + "' WHERE reference = " + reference;
-        
+
         try (
                 Connection connection = this.myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -387,8 +387,8 @@ public class DAO {
         return result;
     }
 
-        public Client getClient(String CLIENT) throws DAOException, SQLException {
-        
+    public Client getClient(String CLIENT) throws DAOException, SQLException {
+
         String sql = "SELECT * FROM CLIENT WHERE CODE = ?";
         Client c = null;
         try (Connection connection = myDataSource.getConnection();
@@ -396,18 +396,17 @@ public class DAO {
             stmt.setString(1, CLIENT);
 
             ResultSet rs = stmt.executeQuery();
-                while(rs.next()){
-                     c = new Client(rs.getString("CODE"), rs.getString("SOCIETE"), rs.getString("CONTACT"), rs.getString("FONCTION"), rs.getString("ADRESSE"), rs.getString("VILLE"), rs.getString("REGION"), rs.getString("CODE_POSTAL"), rs.getString("PAYS"), rs.getString("TELEPHONE"), rs.getString("FAX"));
+            while (rs.next()) {
+                c = new Client(rs.getString("CODE"), rs.getString("SOCIETE"), rs.getString("CONTACT"), rs.getString("FONCTION"), rs.getString("ADRESSE"), rs.getString("VILLE"), rs.getString("REGION"), rs.getString("CODE_POSTAL"), rs.getString("PAYS"), rs.getString("TELEPHONE"), rs.getString("FAX"));
 
-                }
+            }
 
         }
         return c;
     }
-    
-    
-        public void upClient(String CODE, String Societe, String Contact, String fonction, String adresse, String ville, String region, String code_postal, String pays, String tel, String Fax ) throws DAOException, SQLException, Exception {
-       
+
+    public void upClient(String CODE, String Societe, String Contact, String fonction, String adresse, String ville, String region, String code_postal, String pays, String tel, String Fax) throws DAOException, SQLException, Exception {
+
         String sql = "UPDATE CLIENT SET SOCIETE = ?, CONTACT= ?, FONCTION= ?, ADRESSE= ?, VILLE= ?, REGION= ?, CODE_POSTAL= ?, PAYS=?, TELEPHONE= ?, FAX= ? WHERE CODE = ?";
 
         try (Connection connection = myDataSource.getConnection();
@@ -423,26 +422,22 @@ public class DAO {
             stmt.setString(9, tel);
             stmt.setString(10, Fax);
             stmt.setString(11, CODE);
-            
-            
+
             int rs = stmt.executeUpdate();
             connection.commit();
-            if(rs < 1){
+            if (rs < 1) {
                 throw new Exception("erreur");
-            }  
-            
             }
 
-         catch (Exception e) {
+        } catch (Exception e) {
             throw new DAOException("erreur" + e.getMessage());
         }
-        
-            
-    }    
-    
+
+    }
+
     //Requete visualiser les chiffres d'affaire par pays, en choisissant la période (date de début / date de fin) sur laquelle doit porter la statistique.
     //Exemple :
-    //SELECT SUM(PORT) AS CA FROM COMMANDE WHERE PAYS_LIVRAISON='France' AND SAISIE_LE>='1994-08-08' AND ENVOYEE_LE<='1994-08-15';
+    //SAISIE_LE>='1994-08-08' AND ENVOYEE_LE<='1994-08-15';
     public List<ChiffreAffaire> caByClient(String dateSaisie, String dateEnvoyee) throws SQLException, DAOException {
         List<ChiffreAffaire> result = new LinkedList<>();
 
