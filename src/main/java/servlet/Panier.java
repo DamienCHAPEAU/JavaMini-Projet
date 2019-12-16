@@ -54,14 +54,16 @@ public class Panier extends HttpServlet {
                 Produit p2 = dao.produitCode(entry.getKey());
                 Produit p3 = new Produit(p2.getReference(),p2.getNom(),p2.getCategorie(),p2.getPrix_unitaire(),Integer.valueOf(entry.getValue()));
                 
-                if(entry.getValue().equals("0")){
+                    //if(entry.getValue().equals("0") ){
+
+                    //    m.remove(entry.getKey());
+
+                   // }else{
+                        p.add(p3);
+                   // }
                 
-                    m.remove(entry.getKey());
-                    
-                }else{
-                    p.add(p3);
-                }
            }
+           request.getSession().setAttribute("map", m);
            request.setAttribute("code", p);
            
           this.getServletContext().getRequestDispatcher("/panier.jsp").forward(request, response);
@@ -106,8 +108,18 @@ public class Panier extends HttpServlet {
         Map<String, String> m = new LinkedHashMap<>();
         m = (Map<String, String>) request.getSession().getAttribute("map");
         
-        m.put(refu, qteu);
         
+        if(qteu.equals("0") ){
+
+                        m.remove(refu);
+        }else{
+        
+        m.put(refu, qteu);
+        }
+        
+        
+        
+        request.setAttribute("MSG", "produit id : "+refu+" mis à jour, nouvelle quantité : "+qteu);
         
         request.getSession().setAttribute("map", m);
         

@@ -10,6 +10,8 @@
         <title>Connexion</title>
     </head>
     <body>
+        <div><h4>${messageAUTH}</h4></div>
+        
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">

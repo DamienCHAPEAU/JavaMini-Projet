@@ -55,13 +55,14 @@ public class servletLigne extends HttpServlet{
                  
                 prod.add(new Produit(p.getReference(), p.getNom(), p.getCategorie(), p.getPrix_unitaire(), code.get(i).getQuantity())            );
             }
-             
+            
+             /*
              if((code.get(0).getNumCommande())!=((dao.commandesOfClient(val2).get(0).getNumero()))){
                   
                  throw new IOException("client non verifié");
                   
              } 
-
+*/
             // On renseigne un attribut utilisé par la vue
             //request.setAttribute("code", code);
             request.setAttribute("prod", prod);

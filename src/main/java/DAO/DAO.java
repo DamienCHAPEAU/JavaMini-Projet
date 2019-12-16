@@ -171,6 +171,73 @@ public class DAO {
         return result;
     }
 
+    public int addCommande(Client prod) throws SQLException {
+
+        String sql = "INSERT INTO COMMANDE (CLIENT,DESTINATAIRE,ADRESSE_LIVRAISON,VILLE_LIVRAISON,CODE_POSTAL_LIVRAIS,PAYS_LIVRAISON) "
+                + "VALUES(?,?,?,?,?,?)";
+
+        int y = 0 ;
+        ResultSet rs = null;
+        try (
+                Connection connection = this.myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            connection.setAutoCommit(false);
+            try {
+
+                stmt.setString(1, prod.getCODE());
+                stmt.setString(2, prod.getSociete());
+                stmt.setString(3, prod.getAdresse());
+                stmt.setString(4, prod.getVille());
+                stmt.setString(5, prod.getCodePostal());
+                stmt.setString(6, prod.getPays());
+
+                stmt.executeUpdate();
+                
+                rs = stmt.getGeneratedKeys();
+                while (rs.next()) {
+                 y = rs.getInt(1);
+                }
+                connection.commit();
+                
+            } catch (SQLException ex) {
+                Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+                // throw new DAOException(ex.getMessage());
+                connection.rollback();
+            } 
+            
+        }
+        
+        return y;
+    }
+       
+        
+        public void addLigne(int commande, String prod, String quant) throws SQLException {
+
+        String sql = "INSERT INTO LIGNE (COMMANDE,PRODUIT,QUANTITE)  VALUES(?,?,?)";
+
+        try (
+                Connection connection = this.myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            connection.setAutoCommit(false);
+            try {
+
+                stmt.setInt(1, commande);
+                stmt.setString(2, prod);
+                stmt.setString(3, quant);
+
+                stmt.executeUpdate();
+                connection.commit();
+                
+            } catch (SQLException ex) {
+                Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+                // throw new DAOException(ex.getMessage());
+                connection.rollback();
+            } 
+            
+        }
+    }
     public void addProduit(Produit prod) throws SQLException {
 
         String sql = "INSERT INTO  PRODUIT(nom,fournisseur,categorie,quantite_par_unite,prix_unitaire,unites_en_stock, unites_commandees,niveau_de_reappro,indisponible)  "

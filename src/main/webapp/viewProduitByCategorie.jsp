@@ -72,7 +72,7 @@
         <table class="table table-bordered">
             <thead><td>Nom</td><td>Categorie</td><td>Prix</td>  
             <% if (session.getAttribute("client") != null) {%>
-            <td>ref</td> 
+            <td>ref</td> <td>${ MessageprodCat }</td>
             <%}%>
         </thead>
         <tbody>                

@@ -49,12 +49,13 @@
         
 
         <table class="table table-bordered">
-            <thead><td>Nom</td><td>Categorie</td><td>Prix</td><td>ref</td><td>quantité</td><td>${ sessionScope.map }</td></thead>
+            <thead><td>Nom</td><td>Categorie</td><td>Prix</td><td>ref</td><td>quantité</td><td> ${ MSG }</td></thead>
         <tbody>                
             <c:forEach var="code" items="${code}">                    
                 <tr>
             <form method="post">
-                <td>${code.reference}</td>
+                 <td><input type="text" value="${code.reference}" size="5" name="refu" id="refu" readonly></td> 
+                
 
                 <td>${code.nom}</td>
                 <td>${code.categorie}</td>
@@ -76,7 +77,13 @@
     </tr>	  	
 </c:forEach>             
 </tbody>
-
+</body>
+<body>
+<br>
+<div>
+    
+    <a href="servletValidCommande"><input type="button" value="valider le panier"></a>
+</div>
 
 </body>
 </html>

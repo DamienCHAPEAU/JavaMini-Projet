@@ -75,6 +75,7 @@
             <thead><td>Nom</td><td>Categorie</td><td>Prix</td>  
             <% if (session.getAttribute("client") != null) {%>
             <td>ref</td> 
+            <td>${ MessageprodCat }</td>
             <%}%>
             <tbody>                
                 <c:forEach var="code" items="${code}">                    

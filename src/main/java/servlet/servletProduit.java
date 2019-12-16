@@ -110,6 +110,7 @@ public class servletProduit extends HttpServlet {
             map.put(ref, qte);
         }
 
+        request.setAttribute("MessageprodCat", "id : "+ref+"  ajouté "+qte+" fois au panier");
         request.getSession().setAttribute("map", map);
 
         try {

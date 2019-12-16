@@ -48,6 +48,8 @@ public class connexion extends HttpServlet {
             
             
             if(c2 == null){
+                
+                
                 this.getServletContext().getRequestDispatcher("/vue/errorView.jsp").forward(request, response);
             }
             
