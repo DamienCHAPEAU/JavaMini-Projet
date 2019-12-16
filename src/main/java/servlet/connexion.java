@@ -30,7 +30,6 @@ import javax.servlet.http.HttpSession;
 
 public class connexion extends HttpServlet {
 
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         this.getServletContext().getRequestDispatcher("/connexion.jsp").forward(request, response);
@@ -40,38 +39,40 @@ public class connexion extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String Contact = request.getParameter("LOG");
         String MDP = request.getParameter("MDP");
-
+         
         DAO dao = new DAO(DataSourceFactory.getDataSource());
-        
+        if ("admin".equals(Contact) && "admin".equals(MDP)) {
+            HttpSession session = request.getSession();
+            session.setAttribute("admin", Contact);
+            session.setAttribute("MDP", MDP);
+            Map<String, String> m = new LinkedHashMap<>();
+            session.setAttribute("map", m);
+            Logger.getLogger("IDENTIFIANT OK");
+
+            this.getServletContext().getRequestDispatcher("/admin.jsp").forward(request, response);
+        }
         try {
             Client c2 = dao.LOGIN(Contact, MDP);
             
-            
-            if(c2 == null){
-                
-                
-                this.getServletContext().getRequestDispatcher("/vue/errorView.jsp").forward(request, response);
-            }
-            
-           
-            else {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("client", Contact);
-                    session.setAttribute("MDP", MDP);
-                    Map<String, String> m = new LinkedHashMap<>();
-                    session.setAttribute("map", m);
-                    Logger.getLogger("IDENTIFIANT OK");
-                    
-                    this.getServletContext().getRequestDispatcher("/member.jsp").forward(request, response);
-                    
+            if (c2 == null) {              
+                this.getServletContext().getRequestDispatcher("/vue/errorView.jsp").forward(request, response);                
+            } else {
+                HttpSession session = request.getSession();
+                session.setAttribute("client", Contact);
+                session.setAttribute("MDP", MDP);
+                Map<String, String> m = new LinkedHashMap<>();
+                session.setAttribute("map", m);
+                Logger.getLogger("IDENTIFIANT OK");
+
+                this.getServletContext().getRequestDispatcher("/member.jsp").forward(request, response);
+
             }
 
         } catch (SQLException | IOException | ServletException ex) {
             Logger.getLogger(connexion.class.getName()).log(Level.SEVERE, null, ex);
-        
+
         }
 
-       
     }
 
 }

@@ -55,10 +55,13 @@
                     <a class="nav-link" href="Produit">Liste des produits</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="Commandes">Listes Commandes</a> 
+                    <a class="nav-link" href="CAcategorie">Chiffre d'affaires catégorie</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="Client">Info Client</a>
+                    <a class="nav-link" href="CAclient">Chiffre d'affaires client</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="CApays">Chiffre d'affaires pays</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="deconnexion.jsp"><input class="btn btn-outline-secondary btn-sm" type="button" value="disconnect" name="disconnect" /></a>

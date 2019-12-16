@@ -279,20 +279,20 @@ public class DAO {
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
             connection.setAutoCommit(false);
             stmt.executeUpdate();
-            connection.setAutoCommit(true);
+            connection.commit();
         }
     }
 
     public void modifProduit(int reference, String choixModif, String modifProd) throws SQLException {
 
         String sql = "UPDATE PRODUIT SET " + choixModif + " = '" + modifProd + "' WHERE reference = " + reference;
-
+        
         try (
                 Connection connection = this.myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
             connection.setAutoCommit(false);
             stmt.executeUpdate();
-            connection.setAutoCommit(true);
+            connection.commit();
 
         }
     }
