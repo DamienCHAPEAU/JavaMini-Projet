@@ -3,6 +3,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
         <title>Chiffre d'affaire catégorie</title>
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <script type="text/javascript">
@@ -25,7 +28,7 @@
                 ]);
                 // Set chart options
                 var options = {
-                    'title': 'Chiffre d\'affaire par catégorie', //title
+                    'title': 'Chiffre d\'affaire par catégorie (en euro)', //title
                     is3D: true, //render Google Pie Chart as 3D
                     pieSliceText: 'label', //Affiche le label de la catégorie quand on passe la souris
                     tooltip: {showColorCode: true}, // Affiche la couleur sur le label
@@ -39,17 +42,50 @@
         </script>
     </head>
     <body>
-        
-        <h1>Chiffre d'affaire catégorie</h1>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/JavaMini-Projet">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="ListeCategorie">Liste des Categories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Produit">Liste des produits</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Commandes">Listes Commandes</a> 
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Client">Info Client</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="deconnexion.jsp"><input class="btn btn-outline-secondary btn-sm" type="button" value="disconnect" name="disconnect" /></a>
+                </li>
+            </ul>
+        </div>            
+    </nav>
+    <br>
 
-        <form method='GET'>            
-            Saisie le : <input name="Saisie_le" type="date" max="1999-12-31" min="1994-01-01"><br/>
-            Envoyee le : <input name="Envoyee_le" type="date" max="1999-12-31" min="1994-01-01"><br/>           
-            <input type="submit" value="Chercher">
-        </form>
-        <div><h4>${message}</h4></div>     
-        <div style="width: 600px;">
-            <div id="chart_div"></div>
+    <h1>Chiffre d'affaire catégorie</h1>
+    <br>
+    <form method='GET'>
+        <div class="form-group">
+            <label>Saisie le : </label>
+            <input name="Saisie_le" type="date" max="1999-12-31" min="1994-01-01"><br/>
         </div>
-    </body>
+        <div class="form-group">
+            <label> Envoyee le : </label>
+            <input name="Envoyee_le" type="date" max="1999-12-31" min="1994-01-01"><br/>           
+        </div>
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" value="Chercher">
+        </div>
+    </form>
+    <div><h4>${message}</h4></div>     
+    <div style="width: 600px;">
+        <div id="chart_div"></div>
+    </div>
+</body>
 </html>

@@ -9,63 +9,66 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+        <title>Modification client</title>
     </head>
     <body>
-        
-        
-        
-     <c:if test="${ !empty sessionScope.LOG && !empty sessionScope.MDP }">
+
+
+        <br>
+    <c:if test="${ !empty sessionScope.LOG && !empty sessionScope.MDP }">
         <p>Vous êtes ${ sessionScope.client }  !</p>
     </c:if>
-        
-        ${adresse}
-        
+
+    <!--${adresse}-->
+
     <form method="post">
-        <p>
+        <div class="form-group">
             <label for="societe">societe : </label>
             <input type="text" name="societe" id="societe" size="30" value='${ societe }'/>
-        </p>
-        <p>
+        </div>
+        <div class="form-group">
             <label for="contact">contact : </label>
             <input type="text" name="contact" id="contact" value='${client}' />
-        </p>
-                <p>
+        </div>
+        <p>
             <label for="fonction">fonction : </label>
             <input type="text" name="fonction" id="fonction" value="${fonction}"/>
         </p>
-                <p>
+        <div class="form-group">
             <label for="adresse">adresse : </label>
             <input type="text" name="adresse" id="adresse" size="30" value="${adresse}" />
-        </p>
-                <p>
+        </div>
+        <div class="form-group">
             <label for="ville">ville : </label>
             <input type="text" name="ville" id="ville"  value='${ville}' />
-        </p>
-                <p>
+        </div>
+        <div class="form-group">
             <label for="region">region : </label>
             <input type="text" name="region" id="region"  value='${region}' />
-        </p>
-                <p>
+        </div>
+        <div class="form-group">
             <label for="codepostal">code Postal : </label>
             <input type="text" name="codepostal" id="codepostal"  value='${codepostal}'/>
-        </p>
-                <p>
+        </div>
+        <div class="form-group">
             <label for="pays">pays : </label>
             <input type="text" name="pays" id="pays" value='${pays}' />
-        </p>
-                <p>
+        </div>
+        <p>
             <label for="telephone">telephone : </label>
             <input type="text" name="telephone" id="telephone" value='${telephone}' />
-        </p>
-                <p>
+            </div>
+        <div class="form-group">
             <label for="fax">fax : </label>
             <input type="text" name="fax" id="fax"  value='${fax}' />
-        </p>
-        
-        <input type="submit" />
+        </div>
+
+        <input class="btn btn-primary" type="submit" />
     </form>
-        
-      
-    </body>
+
+
+</body>
 </html>
