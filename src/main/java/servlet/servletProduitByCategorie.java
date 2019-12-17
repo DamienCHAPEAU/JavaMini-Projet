@@ -40,21 +40,20 @@ public class servletProduitByCategorie extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException, SQLException {
+            throws ServletException, IOException, SQLException {
 
-		try {
-                        String val = request.getParameter("categorie");
-                        int valInt = Integer.parseInt(val);			
-			DAO dao = new DAO(DataSourceFactory.getDataSource());
-                        List<Produit> code = dao.produitByCategorieCode(valInt);                        
-                        request.setAttribute("code", code);		
-			
-		
-                } catch (Exception ex) {
-			Logger.getLogger("servlet").log(Level.SEVERE, "Erreur de traitement", ex);
-                        request.setAttribute("message", ex.getMessage());
-		}
-                request.getRequestDispatcher("viewProduitByCategorie.jsp").forward(request, response);
+        try {
+            String val = request.getParameter("categorie");
+            int valInt = Integer.parseInt(val);
+            DAO dao = new DAO(DataSourceFactory.getDataSource());
+            List<Produit> code = dao.produitByCategorieCode(valInt);
+            request.setAttribute("code", code);
+
+        } catch (Exception ex) {
+            Logger.getLogger("servlet").log(Level.SEVERE, "Erreur de traitement", ex);
+            request.setAttribute("message", ex.getMessage());
+        }
+        request.getRequestDispatcher("viewProduitByCategorie.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -89,26 +88,24 @@ public class servletProduitByCategorie extends HttpServlet {
             throws ServletException, IOException {
         String qte = request.getParameter("qte");
         String ref = request.getParameter("ref");
-        
-        Map<String, String> map ;
-                
-        if(request.getSession().getAttribute("map") == null){
-        map = new LinkedHashMap<>();
-        
-        
-        map.put(ref, qte);
-        }else{
-        map = (Map<String, String>) request.getSession().getAttribute("map");
-        map.put(ref, qte);
-        
+
+        Map<String, String> map;
+
+        if (request.getSession().getAttribute("map") == null) {
+            map = new LinkedHashMap<>();
+
+            map.put(ref, qte);
+        } else {
+            map = (Map<String, String>) request.getSession().getAttribute("map");
+            map.put(ref, qte);
+
         }
-        
-        request.setAttribute("MessageprodCat", "id : "+ref+"  ajouté "+qte+" fois au panier");
+
+        request.setAttribute("MessageprodCat", "id : " + ref + "  ajouté " + qte + " fois au panier");
         request.getSession().setAttribute("map", map);
-        
 
         try {
-            processRequest(request, response);  
+            processRequest(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(servletListCategorie.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -124,5 +121,4 @@ public class servletProduitByCategorie extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
- }
-
+}

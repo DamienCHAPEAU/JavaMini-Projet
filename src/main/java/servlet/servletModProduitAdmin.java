@@ -38,16 +38,14 @@ public class servletModProduitAdmin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-            
+
         DAO dao = new DAO(DataSourceFactory.getDataSource());
-        
+
         List<Produit> code = dao.produitCode();
         request.setAttribute("code", code);
-        
+
         this.getServletContext().getRequestDispatcher("/adminModProd.jsp").forward(request, response);
-        
-        
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -80,24 +78,23 @@ public class servletModProduitAdmin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         DAO dao = new DAO(DataSourceFactory.getDataSource());
-        
-        String update =  (String) request.getParameter("refUPDATE");
+
+        String update = (String) request.getParameter("refUPDATE");
         String nomUpdate = (String) request.getParameter("nomU");
-        
+
         String catUpdate = request.getParameter("catU");
-        
+
         String prixUpdate = (String) request.getParameter("prixU");
-        
-        request.setAttribute("messageUpdate", "produit : "+nomUpdate+" mis à jour");
+
+        request.setAttribute("messageUpdate", "produit : " + nomUpdate + " mis à jour");
         try {
             dao.updateProduit(update, nomUpdate, Integer.valueOf(catUpdate), Double.parseDouble(prixUpdate));
         } catch (SQLException ex) {
             Logger.getLogger(servletModProduitAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        
         try {
             processRequest(request, response);
         } catch (SQLException ex) {

@@ -36,21 +36,20 @@ public class servletListCategorie extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException, SQLException {
+            throws ServletException, IOException, SQLException {
 
-		try {
-			// Créér le ExtendedDAO avec sa source de données
-			DAO dao = new DAO(DataSourceFactory.getDataSource());
-                        List<Categorie> code = dao.listCategorieCode();                        
-                        request.setAttribute("code", code);
-			// On continue vers la page JSP sélectionnée
-			
-		
-                } catch (Exception ex) {
-			Logger.getLogger("servlet").log(Level.SEVERE, "Erreur de traitement", ex);
-                        request.setAttribute("message", ex.getMessage());
-		}
-                request.getRequestDispatcher("viewListCategorie.jsp").forward(request, response);
+        try {
+            // Créér le ExtendedDAO avec sa source de données
+            DAO dao = new DAO(DataSourceFactory.getDataSource());
+            List<Categorie> code = dao.listCategorieCode();
+            request.setAttribute("code", code);
+            // On continue vers la page JSP sélectionnée
+
+        } catch (Exception ex) {
+            Logger.getLogger("servlet").log(Level.SEVERE, "Erreur de traitement", ex);
+            request.setAttribute("message", ex.getMessage());
+        }
+        request.getRequestDispatcher("viewListCategorie.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -100,5 +99,4 @@ public class servletListCategorie extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
- }
-
+}

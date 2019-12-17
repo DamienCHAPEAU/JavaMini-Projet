@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "SupprProduitAdmin", urlPatterns = {"/SupprProduitAdmin"})
 public class servletSupprProduitAdmin extends HttpServlet {
 
-   /**
+    /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -38,16 +38,14 @@ public class servletSupprProduitAdmin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-            
+
         DAO dao = new DAO(DataSourceFactory.getDataSource());
-        
+
         List<Produit> code = dao.produitCode();
         request.setAttribute("code", code);
-        
+
         this.getServletContext().getRequestDispatcher("/adminSupprProd.jsp").forward(request, response);
-        
-        
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -80,20 +78,18 @@ public class servletSupprProduitAdmin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         DAO dao = new DAO(DataSourceFactory.getDataSource());
-        
-        String suppr =  (String) request.getParameter("refUPDATE");
-        
-        
-        request.setAttribute("messageSuppr", "produit : "+suppr+" mis à jour");
+
+        String suppr = (String) request.getParameter("refUPDATE");
+
+        request.setAttribute("messageSuppr", "produit : " + suppr + " mis à jour");
         try {
             dao.suppProduit(Integer.valueOf(suppr));
         } catch (SQLException ex) {
             Logger.getLogger(servletModProduitAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        
         try {
             processRequest(request, response);
         } catch (SQLException ex) {

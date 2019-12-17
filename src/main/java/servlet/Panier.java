@@ -40,33 +40,30 @@ public class Panier extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-       
-           DAO dao = new DAO(DataSourceFactory.getDataSource());
 
-           List<Produit> p = new ArrayList<Produit>();
-           
-           Map<String, String> m = new LinkedHashMap<>();
-           m = (Map<String, String>) request.getSession().getAttribute("map");
-           
-           
-           for(Map.Entry<String, String> entry : m.entrySet()){
-               
-                Produit p2 = dao.produitCode(entry.getKey());
-                Produit p3 = new Produit(p2.getReference(),p2.getNom(),p2.getCategorie(),p2.getPrix_unitaire(),Integer.valueOf(entry.getValue()));
-                
-                    //if(entry.getValue().equals("0") ){
+        DAO dao = new DAO(DataSourceFactory.getDataSource());
 
-                    //    m.remove(entry.getKey());
+        List<Produit> p = new ArrayList<Produit>();
 
-                   // }else{
-                        p.add(p3);
-                   // }
-                
-           }
-           request.getSession().setAttribute("map", m);
-           request.setAttribute("code", p);
-           
-          this.getServletContext().getRequestDispatcher("/panier.jsp").forward(request, response);
+        Map<String, String> m = new LinkedHashMap<>();
+        m = (Map<String, String>) request.getSession().getAttribute("map");
+
+        for (Map.Entry<String, String> entry : m.entrySet()) {
+
+            Produit p2 = dao.produitCode(entry.getKey());
+            Produit p3 = new Produit(p2.getReference(), p2.getNom(), p2.getCategorie(), p2.getPrix_unitaire(), Integer.valueOf(entry.getValue()));
+
+            //if(entry.getValue().equals("0") ){
+            //    m.remove(entry.getKey());
+            // }else{
+            p.add(p3);
+            // }
+
+        }
+        request.getSession().setAttribute("map", m);
+        request.setAttribute("code", p);
+
+        this.getServletContext().getRequestDispatcher("/panier.jsp").forward(request, response);
 
     }
 
@@ -100,30 +97,25 @@ public class Panier extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
+
         String qteu = request.getParameter("qteu");
         String refu = request.getParameter("refu");
-        
+
         Map<String, String> m = new LinkedHashMap<>();
         m = (Map<String, String>) request.getSession().getAttribute("map");
-        
-        
-        if(qteu.equals("0") ){
 
-                        m.remove(refu);
-        }else{
-        
-        m.put(refu, qteu);
+        if (qteu.equals("0")) {
+
+            m.remove(refu);
+        } else {
+
+            m.put(refu, qteu);
         }
-        
-        
-        
-        request.setAttribute("MSG", "produit id : "+refu+" mis à jour, nouvelle quantité : "+qteu);
-        
+
+        request.setAttribute("MSG", "produit id : " + refu + " mis à jour, nouvelle quantité : " + qteu);
+
         request.getSession().setAttribute("map", m);
-        
-        
+
         try {
             processRequest(request, response);
         } catch (SQLException ex) {

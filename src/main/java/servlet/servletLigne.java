@@ -28,41 +28,36 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ligneCommandes", urlPatterns = "/ligneCommandes")
 
-public class servletLigne extends HttpServlet{
-    
+public class servletLigne extends HttpServlet {
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
 
+        try {
+            HttpSession ses = request.getSession();
+            String val2 = (String) ses.getAttribute("MDP");
 
-            try {	
-                 HttpSession ses = request.getSession();
-                String val2 = (String) ses.getAttribute("MDP");
-                
-                
-                String val = request.getParameter("commande");
-            
-            
+            String val = request.getParameter("commande");
+
             DAO dao = new DAO(DataSourceFactory.getDataSource());
             //List<Commande> code = dao.commandes();
             List<Ligne> code = dao.ligneOfCommandes(Integer.valueOf(val));
-            
-            
-            
-             List<Produit> prod = new LinkedList<>();
-            
-             for(int i = 0; i< code.size(); i++){
-                 Produit p = dao.produitCode(String.valueOf(code.get(i).getNumProduit()));
-                 
-                prod.add(new Produit(p.getReference(), p.getNom(), p.getCategorie(), p.getPrix_unitaire(), code.get(i).getQuantity())            );
+
+            List<Produit> prod = new LinkedList<>();
+
+            for (int i = 0; i < code.size(); i++) {
+                Produit p = dao.produitCode(String.valueOf(code.get(i).getNumProduit()));
+
+                prod.add(new Produit(p.getReference(), p.getNom(), p.getCategorie(), p.getPrix_unitaire(), code.get(i).getQuantity()));
             }
-            
-             /*
+
+            /*
              if((code.get(0).getNumCommande())!=((dao.commandesOfClient(val2).get(0).getNumero()))){
                   
                  throw new IOException("client non verifié");
                   
              } 
-*/
+             */
             // On renseigne un attribut utilisé par la vue
             //request.setAttribute("code", code);
             request.setAttribute("prod", prod);
@@ -70,7 +65,7 @@ public class servletLigne extends HttpServlet{
             // On redirige vers la vue
             request.getRequestDispatcher("ligneCommandes.jsp").forward(request, response);
 
-        } catch (IOException | ServletException e ) {
+        } catch (IOException | ServletException e) {
             Logger.getLogger("servlet").log(Level.SEVERE, "Erreur de traitement", e);
             // On renseigne un attribut utilisé par la vue
 
@@ -131,7 +126,4 @@ public class servletLigne extends HttpServlet{
         return "Short description";
     }// </editor-fold>
 
-    
 }
-
-

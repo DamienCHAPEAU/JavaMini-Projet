@@ -83,7 +83,7 @@ public class servletAddProduitAdmin extends HttpServlet {
         String addRef = (String) request.getParameter("ref");
         String addNom = (String) request.getParameter("name");
         String addCat = request.getParameter("cat");
-        String addPrix = (String) request.getParameter("prix");        
+        String addPrix = (String) request.getParameter("prix");
         /*String addFournisseur = (String) request.getParameter("fourn");        
         String addQtUnit = request.getParameter("qt");        
         String addUnitStock = (String) request.getParameter("stock");
@@ -91,7 +91,7 @@ public class servletAddProduitAdmin extends HttpServlet {
         String addNiveauAppro = (String) request.getParameter("appro");
         String addIndispo = (String) request.getParameter("indis");*/
 
-        Produit p = new Produit(Integer.valueOf(addRef),addNom, Integer.valueOf(addCat), Double.parseDouble(addPrix));
+        Produit p = new Produit(Integer.valueOf(addRef), addNom, Integer.valueOf(addCat), Double.parseDouble(addPrix));
 
         request.setAttribute("messageAdd", "produit : " + addNom);
         try {

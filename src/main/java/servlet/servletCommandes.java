@@ -21,40 +21,31 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
-
-
 @WebServlet(name = "Commandes", urlPatterns = "/Commandes")
 
 /**
  *
  * @author pedago
  */
-public class servletCommandes extends HttpServlet{
- 
-    
+public class servletCommandes extends HttpServlet {
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
 
-
-            try {	
+        try {
             //String val = request.getParameter("client");
             HttpSession ses = request.getSession();
             String val = (String) ses.getAttribute("MDP");
-                    
-            
+
             DAO dao = new DAO(DataSourceFactory.getDataSource());
             //List<Commande> code = dao.commandes();
             List<Commande> code = dao.commandesOfClient(val);
 
-
             // On renseigne un attribut utilisé par la vue
             request.setAttribute("code", code);
-            
+
             // On redirige vers la vue
             request.getRequestDispatcher("viewCommandes.jsp").forward(request, response);
-            
-            
 
         } catch (IOException | SQLException | ServletException e) {
             Logger.getLogger("servlet").log(Level.SEVERE, "Erreur de traitement", e);
@@ -65,7 +56,7 @@ public class servletCommandes extends HttpServlet{
         }
 
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

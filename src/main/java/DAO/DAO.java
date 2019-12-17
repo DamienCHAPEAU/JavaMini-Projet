@@ -250,7 +250,7 @@ public class DAO {
             connection.setAutoCommit(false);
             try {
                 stmt.setInt(1, prod.getReference());
-                stmt.setString(2, prod.getNom());                
+                stmt.setString(2, prod.getNom());
                 stmt.setInt(3, prod.getCategorie());
                 stmt.setDouble(4, prod.getPrix_unitaire());
                 /*stmt.setInt(5, prod.getFournisseur());
@@ -283,28 +283,25 @@ public class DAO {
         }
     }
 
-    
-        public void updateProduit(String reference, String nom, int categorie, double prix) throws SQLException {
+    public void updateProduit(String reference, String nom, int categorie, double prix) throws SQLException {
 
         String sql = "UPDATE PRODUIT SET Nom =? , Categorie =? , Prix_unitaire =? where Reference = ?";
 
         try (
                 Connection connection = this.myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
-            
+
             stmt.setString(1, nom);
             stmt.setInt(2, categorie);
             stmt.setDouble(3, prix);
             stmt.setString(4, reference);
-            
+
             connection.setAutoCommit(false);
             stmt.executeUpdate();
             connection.commit();
 
         }
     }
-    
-
 
     public List<Commande> commandesOfClient(String CLIENT) throws DAOException, SQLException {
         List<Commande> result = new LinkedList<>();

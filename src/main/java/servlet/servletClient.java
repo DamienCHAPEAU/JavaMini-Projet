@@ -24,25 +24,20 @@ import javax.servlet.http.HttpSession;
  *
  * @author pedago
  */
-
 @WebServlet(name = "Client", urlPatterns = "/Client")
-public class servletClient extends HttpServlet{
-    
-    
+public class servletClient extends HttpServlet {
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
 
-
-            try {	
+        try {
             //String val = request.getParameter("client");
             HttpSession ses = request.getSession();
             String val = (String) ses.getAttribute("MDP");
-            
-            
+
             DAO dao = new DAO(DataSourceFactory.getDataSource());
             //List<Commande> code = dao.commandes();
             List<Client> code = dao.infoClient(val);
-
 
             // On renseigne un attribut utilisé par la vue
             request.setAttribute("code", code);
@@ -59,7 +54,7 @@ public class servletClient extends HttpServlet{
         }
 
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

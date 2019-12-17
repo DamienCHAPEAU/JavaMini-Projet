@@ -54,10 +54,8 @@ public class servletProduit extends HttpServlet {
             }
             // request.setAttribute("code", code);
             //request.setAttribute("ref", ref);
-           
 
             // On continue vers la page JSP sélectionnée
-
         } catch (SQLException ex) {
             Logger.getLogger("servlet").log(Level.SEVERE, "Erreur de traitement", ex);
             request.setAttribute("message", ex.getMessage());
@@ -95,7 +93,7 @@ public class servletProduit extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String qte = request.getParameter("qte");
         String ref = request.getParameter("ref");
 
@@ -110,7 +108,7 @@ public class servletProduit extends HttpServlet {
             map.put(ref, qte);
         }
 
-        request.setAttribute("MessageprodCat", "id : "+ref+"  ajouté "+qte+" fois au panier");
+        request.setAttribute("MessageprodCat", "id : " + ref + "  ajouté " + qte + " fois au panier");
         request.getSession().setAttribute("map", map);
 
         try {
