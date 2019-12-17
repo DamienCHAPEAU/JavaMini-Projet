@@ -65,7 +65,7 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav">
                             <li class="nav-item active">
-                                <a class="nav-link" href="/JavaMini-Projet">Accueil</a>
+                                <a class="nav-link" href="/">Accueil</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="ListeCategorie">Liste des Categories</a>
@@ -91,7 +91,7 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav">
                             <li class="nav-item active">
-                                <a class="nav-link" href="/JavaMini-Projet">Accueil</a>
+                                <a class="nav-link" href="/">Accueil</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="ListeCategorie">Liste des Categories</a>
