@@ -131,7 +131,7 @@ public class DAO {
 
         List<Produit> result = new LinkedList<>();
 
-        String sql = "SELECT * FROM Produit ORDER BY REFERENCE AND INDISPONIBLE!=1";
+        String sql = "SELECT * FROM Produit WHERE INDISPONIBLE!=1 ORDER BY REFERENCE ";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
