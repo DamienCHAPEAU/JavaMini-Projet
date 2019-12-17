@@ -240,8 +240,8 @@ public class DAO {
 
     public void addProduit(Produit prod) throws SQLException {
 
-        String sql = "INSERT INTO  PRODUIT(nom,fournisseur,categorie,quantite_par_unite,prix_unitaire,unites_en_stock, unites_commandees,niveau_de_reappro,indisponible)  "
-                + "VALUES(?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO  PRODUIT(reference,nom,categorie,prix_unitaire)  "
+                + "VALUES(?,?,?,?)";
 
         try (
                 Connection connection = this.myDataSource.getConnection();
@@ -249,16 +249,16 @@ public class DAO {
 
             connection.setAutoCommit(false);
             try {
-
-                stmt.setString(1, prod.getNom());
-                stmt.setInt(2, prod.getFournisseur());
+                stmt.setInt(1, prod.getReference());
+                stmt.setString(2, prod.getNom());                
                 stmt.setInt(3, prod.getCategorie());
-                stmt.setString(4, prod.getQuantite_par_unite());
-                stmt.setDouble(5, prod.getPrix_unitaire());
-                stmt.setInt(6, prod.getUnites_en_stock());
-                stmt.setInt(7, prod.getUnites_commandees());
-                stmt.setInt(8, prod.getNiveau_de_reappro());
-                stmt.setInt(9, prod.getIndisponible());
+                stmt.setDouble(4, prod.getPrix_unitaire());
+                /*stmt.setInt(5, prod.getFournisseur());
+                stmt.setString(6, prod.getQuantite_par_unite());                
+                stmt.setInt(7, prod.getUnites_en_stock());
+                stmt.setInt(8, prod.getUnites_commandees());
+                stmt.setInt(9, prod.getNiveau_de_reappro());
+                stmt.setInt(10, prod.getIndisponible());*/
 
                 stmt.executeUpdate();
                 connection.commit();

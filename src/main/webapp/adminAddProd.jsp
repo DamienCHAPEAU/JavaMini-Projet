@@ -57,25 +57,31 @@
         
         <form method="post">
             <div class="form-group">
-                <label>Nom : </label>
-                <input type="text" name="name" id="name" />
+                <label>Reference : </label>
+                <input type="text" name="ref" id="ref" />
             </div>
             <div class="form-group">
-                <label>Fournisseur : </label>
-                <input type="text" name="fourn" id="fourn" />
+                <label>Nom : </label>
+                <input type="text" name="name" id="name" />
             </div>
             <div class="form-group">
                 <label>Catégorie : </label>
                 <input type="text" name="cat" id="cat" />
             </div>
             <div class="form-group">
-                <label>Quantité unité : </label>
-                <input type="text" name="qt" id="qt" />
-            </div>
-            <div class="form-group">
                 <label>Prix : </label>
                 <input type="text" name="prix" id="prix" />
             </div>
+            <!--<div class="form-group">
+                <label>Fournisseur : </label>
+                <input type="text" name="fourn" id="fourn" />
+            </div>
+            
+            <div class="form-group">
+                <label>Quantité unité : </label>
+                <input type="text" name="qt" id="qt" />
+            </div>
+            
             <div class="form-group">
                 <label>Unité en stock : </label>
                 <input type="text" name="stock" id="stock" />
@@ -91,7 +97,7 @@
             <div class="form-group">
                 <label>Indisponible(0 ou 1) : </label>
                 <input type="indis" name="prix" id="indis" />
-            </div>
+            </div>-->
             <button type="submit" class="btn btn-primary">Ajouter</button>
         </form>
         ${ messageUpdate }
@@ -103,9 +109,7 @@
                     <tr>
                         <td>${code.nom}</td>
                         <td>${code.categorie}</td>
-                        <td>${code.prix_unitaire}</td>  
-
-
+                        <td>${code.prix_unitaire}</td>
                     </tr>	  	
                     </c:forEach>  
                 </tbody>

@@ -80,18 +80,18 @@ public class servletAddProduitAdmin extends HttpServlet {
             throws ServletException, IOException {
 
         DAO dao = new DAO(DataSourceFactory.getDataSource());
-
+        String addRef = (String) request.getParameter("ref");
         String addNom = (String) request.getParameter("name");
-        String addFournisseur = (String) request.getParameter("fourn");
         String addCat = request.getParameter("cat");
-        String addQtUnit = request.getParameter("qt");
-        String addPrix = (String) request.getParameter("prix");
+        String addPrix = (String) request.getParameter("prix");        
+        /*String addFournisseur = (String) request.getParameter("fourn");        
+        String addQtUnit = request.getParameter("qt");        
         String addUnitStock = (String) request.getParameter("stock");
         String addUnitComm = (String) request.getParameter("commande");
         String addNiveauAppro = (String) request.getParameter("appro");
-        String addIndispo = (String) request.getParameter("indis");
+        String addIndispo = (String) request.getParameter("indis");*/
 
-        Produit p = new Produit(addNom, Integer.valueOf(addFournisseur), Integer.valueOf(addCat), addQtUnit, Double.parseDouble(addPrix), Integer.valueOf(addUnitStock), Integer.valueOf(addUnitComm), Integer.valueOf(addNiveauAppro), Integer.valueOf(addIndispo));
+        Produit p = new Produit(Integer.valueOf(addRef),addNom, Integer.valueOf(addCat), Double.parseDouble(addPrix));
 
         request.setAttribute("messageAdd", "produit : " + addNom);
         try {
