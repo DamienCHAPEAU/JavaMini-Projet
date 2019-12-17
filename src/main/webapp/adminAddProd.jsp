@@ -94,7 +94,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Ajouter</button>
         </form>
-
+        ${ messageUpdate }
         <table class="table table-bordered">
             <thead><td>Nom</td><td>Categorie</td><td>Prix</td> 
 

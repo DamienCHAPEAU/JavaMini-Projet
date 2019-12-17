@@ -106,7 +106,7 @@ public class DAO {
 
         List<Produit> result = new LinkedList<>();
 
-        String sql = "SELECT * FROM PRODUIT WHERE CATEGORIE=?";
+        String sql = "SELECT * FROM PRODUIT WHERE CATEGORIE=? AND INDISPONIBLE!=1";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, CATEGORIE);
@@ -131,7 +131,7 @@ public class DAO {
 
         List<Produit> result = new LinkedList<>();
 
-        String sql = "SELECT * FROM Produit ORDER BY REFERENCE";
+        String sql = "SELECT * FROM Produit ORDER BY REFERENCE AND INDISPONIBLE!=1";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
@@ -151,7 +151,7 @@ public class DAO {
 
         Produit result = null;
 
-        String sql = "SELECT * FROM Produit WHERE REFERENCE = ?";
+        String sql = "SELECT * FROM Produit WHERE REFERENCE = ? AND INDISPONIBLE!=1";
 
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
