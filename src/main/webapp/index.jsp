@@ -68,6 +68,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="Client">Info Client</a>
                             </li>
+                            
                             <li class="nav-item">
                                 <a class="nav-link" href="deconnexion.jsp"><input class="btn btn-outline-secondary btn-sm" type="button" value="disconnect" name="disconnect" /></a>
                             </li>

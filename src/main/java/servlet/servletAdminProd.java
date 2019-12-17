@@ -5,8 +5,15 @@
  */
 package servlet;
 
+import DAO.DAO;
+import DAO.DataSourceFactory;
+import DAO.modele.Produit;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,8 +24,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author licence
  */
-@WebServlet(name = "servletAddUpdateProd", urlPatterns = {"/servletAddUpdateProd"})
-public class servletAddUpdateProd extends HttpServlet {
+@WebServlet(name = "servletAdminProd", urlPatterns = {"/servletAdminProd"})
+public class servletAdminProd extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,17 +37,14 @@ public class servletAddUpdateProd extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
+            throws ServletException, IOException, SQLException {
+            
+        DAO dao = new DAO(DataSourceFactory.getDataSource());
         
-                
-                    
+        List<Produit> code = dao.produitCode();
+        request.setAttribute("code", code);
         
-        
-        
-                this.getServletContext().getRequestDispatcher("/addOrUpdateProd.jsp").forward(request, response);
-
-        
+        this.getServletContext().getRequestDispatcher("/adminProd.jsp").forward(request, response);
         
         
         
@@ -58,7 +62,11 @@ public class servletAddUpdateProd extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(servletAdminProd.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -72,7 +80,33 @@ public class servletAddUpdateProd extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        DAO dao = new DAO(DataSourceFactory.getDataSource());
+        
+        String update =  (String) request.getParameter("refUPDATE");
+        String nomUpdate = (String) request.getParameter("nomU");
+        
+        String catUpdate = request.getParameter("catU");
+        
+        String prixUpdate = (String) request.getParameter("prixU");
+        
+        request.setAttribute("messageUpdate", "produit : "+nomUpdate+" mis à jour");
+        try {
+            dao.updateProduit(update, nomUpdate, Integer.valueOf(catUpdate), Double.parseDouble(prixUpdate));
+        } catch (SQLException ex) {
+            Logger.getLogger(servletAdminProd.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+        //    this.getServletContext().getRequestDispatcher("/servletAddUpdateProd.jsp").forward(request, response);
+        
+        
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(servletAdminProd.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
