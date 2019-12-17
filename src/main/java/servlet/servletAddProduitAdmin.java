@@ -24,8 +24,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author damsc
  */
-@WebServlet(name = "ProduitAdmin", urlPatterns = {"/ProduitAdmin"})
-public class servletProduitAdmin extends HttpServlet {
+@WebServlet(name = "AddProduitAdmin", urlPatterns = {"/AddProduitAdmin"})
+public class servletAddProduitAdmin extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,33 +39,16 @@ public class servletProduitAdmin extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
 
-        try {
-            String refP = request.getParameter("refP");
-            // Créér le ExtendedDAO avec sa source de données
-            DAO dao = new DAO(DataSourceFactory.getDataSource());
+        DAO dao = new DAO(DataSourceFactory.getDataSource());
 
-            if (refP == null) {
-                List<Produit> code = dao.produitCode();
-                request.setAttribute("code", code);
-            } else {
-                Produit code = dao.produitCode(refP);
-                request.setAttribute("code", code);
-            }
-            // request.setAttribute("code", code);
-            //request.setAttribute("ref", ref);
-           
+        List<Produit> code = dao.produitCode();
+        request.setAttribute("code", code);
 
-            // On continue vers la page JSP sélectionnée
+        this.getServletContext().getRequestDispatcher("/adminAddProd.jsp").forward(request, response);
 
-        } catch (SQLException ex) {
-            Logger.getLogger("servlet").log(Level.SEVERE, "Erreur de traitement", ex);
-            request.setAttribute("message", ex.getMessage());
-        }
-        request.getRequestDispatcher("viewProduitAdmin.jsp").forward(request, response);
     }
 
-    
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -80,7 +63,7 @@ public class servletProduitAdmin extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(servletProduitAdmin.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(servletModProduitAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -95,10 +78,32 @@ public class servletProduitAdmin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        DAO dao = new DAO(DataSourceFactory.getDataSource());
+
+        String addNom = (String) request.getParameter("name");
+        String addFournisseur = (String) request.getParameter("fourn");
+        String addCat = request.getParameter("cat");
+        String addQtUnit = request.getParameter("qt");
+        String addPrix = (String) request.getParameter("prix");
+        String addUnitStock = (String) request.getParameter("stock");
+        String addUnitComm = (String) request.getParameter("commande");
+        String addNiveauAppro = (String) request.getParameter("appro");
+        String addIndispo = (String) request.getParameter("indis");
+
+        Produit p = new Produit(addNom, Integer.valueOf(addFournisseur), Integer.valueOf(addCat), addQtUnit, Double.parseDouble(addPrix), Integer.valueOf(addUnitStock), Integer.valueOf(addUnitComm), Integer.valueOf(addNiveauAppro), Integer.valueOf(addIndispo));
+
+        request.setAttribute("messageAdd", "produit : " + addNom);
+        try {
+            dao.addProduit(p);
+        } catch (SQLException ex) {
+            Logger.getLogger(servletModProduitAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(servletProduitAdmin.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(servletModProduitAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

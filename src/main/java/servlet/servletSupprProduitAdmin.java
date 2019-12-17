@@ -22,12 +22,12 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author licence
+ * @author damsc
  */
-@WebServlet(name = "servletAdminProd", urlPatterns = {"/servletAdminProd"})
-public class servletAdminProd extends HttpServlet {
+@WebServlet(name = "SupprProduitAdmin", urlPatterns = {"/SupprProduitAdmin"})
+public class servletSupprProduitAdmin extends HttpServlet {
 
-    /**
+   /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -44,7 +44,7 @@ public class servletAdminProd extends HttpServlet {
         List<Produit> code = dao.produitCode();
         request.setAttribute("code", code);
         
-        this.getServletContext().getRequestDispatcher("/adminProd.jsp").forward(request, response);
+        this.getServletContext().getRequestDispatcher("/adminSupprProd.jsp").forward(request, response);
         
         
         
@@ -65,7 +65,7 @@ public class servletAdminProd extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(servletAdminProd.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(servletModProduitAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -83,29 +83,21 @@ public class servletAdminProd extends HttpServlet {
         
         DAO dao = new DAO(DataSourceFactory.getDataSource());
         
-        String update =  (String) request.getParameter("refUPDATE");
-        String nomUpdate = (String) request.getParameter("nomU");
+        String suppr =  (String) request.getParameter("refUPDATE");
         
-        String catUpdate = request.getParameter("catU");
         
-        String prixUpdate = (String) request.getParameter("prixU");
-        
-        request.setAttribute("messageUpdate", "produit : "+nomUpdate+" mis à jour");
+        request.setAttribute("messageSuppr", "produit : "+suppr+" mis à jour");
         try {
-            dao.updateProduit(update, nomUpdate, Integer.valueOf(catUpdate), Double.parseDouble(prixUpdate));
+            dao.suppProduit(Integer.valueOf(suppr));
         } catch (SQLException ex) {
-            Logger.getLogger(servletAdminProd.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(servletModProduitAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
-        //    this.getServletContext().getRequestDispatcher("/servletAddUpdateProd.jsp").forward(request, response);
-        
+
         
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(servletAdminProd.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(servletModProduitAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

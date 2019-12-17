@@ -106,10 +106,7 @@
                     <tr>
                         <td>${code.nom}</td>
                         <td>${code.categorie}</td>
-                        <td>${code.prix_unitaire}</td>
-                        <td>0</td>
-                        <td>0</td>
-                       
+                        <td>${code.prix_unitaire}</td>                       
                 <form method="post">
 
                     <td><input type="text" name="ref" id="ref" value = "${code.reference}" size="5" readonly/></td>

@@ -51,6 +51,18 @@ public class Produit {
         this.niveau_de_reappro = niveau_de_reappro;
         this.indisponible = indisponible;
     }
+    
+     public Produit(String nom, int fournisseur,int categorie, String quantite_par_unite, double prix_unitaire, int unites_en_stock, int unites_commandees, int niveau_de_reappro, int indisponible) {
+        this.nom = nom;
+        this.fournisseur = fournisseur;
+        this.categorie = categorie;
+        this.quantite_par_unite = quantite_par_unite;
+        this.prix_unitaire = prix_unitaire;
+        this.unites_en_stock = unites_en_stock;
+        this.unites_commandees = unites_commandees;
+        this.niveau_de_reappro = niveau_de_reappro;
+        this.indisponible = indisponible;
+    }
 
     public int getFournisseur() {
         return fournisseur;
